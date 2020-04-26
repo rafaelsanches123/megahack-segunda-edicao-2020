@@ -12,6 +12,7 @@ WORKDIR /work
 RUN apt-get install -y libsqlite3-dev wget python-pip build-essential pkg-config python-dev && \
 	pip install --upgrade pip && \
 	pip install pandas && \
+	pip install -U drf-yasg && \
 	pip install psycopg2 && \
 	pip install Django && \
 	pip install argparse && \
