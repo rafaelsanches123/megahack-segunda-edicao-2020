@@ -1,0 +1,22 @@
+version: "3"
+services:
+    db:
+        container_name: postgres
+        image: postgres
+        environment:
+            - POSTGRES_DB=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+    backend:
+        container_name: backend
+        build:
+            context: .
+            dockerfile: backend/Dockerfile
+        command: ./command.sh
+        volumes:
+            - .:/code
+        ports:
+            - "8000:8000"
+        depends_on:
+            - db
+
