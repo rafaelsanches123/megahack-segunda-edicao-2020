@@ -40,7 +40,7 @@
 </template>
 
 <script>
-    import Home from "./Login";
+    import Login from "./Login";
     import Home from "./Home";
     import Browse from "./Browse";
     import Featured from "./Featured";
