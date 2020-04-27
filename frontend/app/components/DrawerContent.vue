@@ -40,6 +40,7 @@
 </template>
 
 <script>
+    import Home from "./Login";
     import Home from "./Home";
     import Browse from "./Browse";
     import Featured from "./Featured";
@@ -55,6 +56,7 @@
         },
         data () {
             return {
+                Login: Login,
                 Home: Home,
                 Browse: Browse,
                 Featured: Featured,
@@ -64,6 +66,7 @@
             };
         },
         components: {
+            Login,
             Home,
             Browse,
             Featured,
