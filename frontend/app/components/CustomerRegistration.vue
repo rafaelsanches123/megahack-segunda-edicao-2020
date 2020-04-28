@@ -26,20 +26,20 @@
             <StackLayout class="">
 
                 <StackLayout class="">
-                    <Image class="logo" src="~/images/logo.png" stretch="none" />
-                    <Label class="header" text="ME SALVE" />
-                    <Label class="sub-header" text="O app que vai mudar sua saúde financeira!" />
+                    <Label class="header" text="CADASTRAR-ME" />
+                    <Label class="sub-header" text="Aqui é o primeiro passo para mudar a saúde da sua vida financeira!" />
                 </StackLayout>
 
-                <TextField class="inputs-text" v-model="textFieldLogin"  hint="LOGIN"/>
+                <TextField class="inputs-text" v-model="textFieldName"  hint="NOME COMPLETO"/>
+
+                <TextField class="inputs-text" v-model="textFieldNickname"  hint="COMO QUER SER CHAMADO (ex:APELIDO)"/>
+
+                <TextField class="inputs-text" v-model="textFieldEmail"  hint="E-MAIL"/>
 
                 <TextField class="inputs-text" v-model="textFieldPassword"  hint="SENHA"/>
 
-                <Button class="btn-primary" text="ENTRAR" @tap="validateLogin" />
 
-                <Button class="btn-primary" text="CADASTRAR-ME" @tap="goCustomerRegistration" />
-
-                <Label class="lost-password" text="Esqueci minha senha!" />
+                <Button class="btn-primary" text="CRIAR MINHA CONTA" @tap="validateRegistration" />
 
             </StackLayout>
 
@@ -51,19 +51,19 @@
 <script>
     import * as utils from "~/shared/utils";
     import SelectedPageService from "../shared/selected-page-service";
-    import CustomerRegistration from "./CustomerRegistration";
-    import Home from "./Home";
     import * as http from "http";
 
     export default {
         data() {
             return {
-                textFieldLogin    : "",
-                textFieldPassword : ""
+                textFieldName        : "",
+                textFieldNickname    : "",
+                textFieldEmail       : "",
+                textFieldPassword    : ""
             }
         },
         mounted() {
-            SelectedPageService.getInstance().updateSelectedPage("Login");
+            SelectedPageService.getInstance().updateSelectedPage("CustomerRegistration");
         },
         computed: {
 
@@ -72,41 +72,38 @@
             onDrawerButtonTap() {
                 utils.showDrawer();
             },
-            validateLogin() {
-
-                if (this.textFieldLogin == "" || this.textFieldPassword == "") {
+            validateRegistration() {
+                if (this.textFieldName == "" || this.textFieldNickname == "" || this.textFieldEmail == "" || this.textFieldPassword == "") {
                     this.alert(
-                        "Por favor, seu email e senha são obrigatórios!"
+                        "Por favor, todos os dados são obrigatórios o seu preenchimento!"
                     )
                 }
                 else {
                     http.request({
-                    url: "http://localhost:8000/login",
+                    url: "http://localhost:8000/cadastro",
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     content: JSON.stringify({
-                        email: this.textFieldLogin,
+                        name: this.textFieldName,
+                        nickname: this.textFieldNickname,
+                        email: this.textFieldEmail,
                         password: this.textFieldPassword
                     })
                     }).then(response => {
                     
                     var result = response.content.toJSON();
                     if(result == True){
-                        this.alert("Login efetuado com sucesso!")
-                        this.$navigateTo(CustomerRegistration);
+                        this.alert("Parabéns seu cadastro foi realizado com sucesso! Verifique seu email cadastrado nele conterá seu login e senha para acessar o app!")
                     }else{
-                        this.alert("Não foi possível realizar seu login. Verifique seu email e senha e tente novamente mais tarde!")
+                        this.alert("Não foi possível realizar seu cadastro. Tente novamente mais tarde!")
                     }
                     
+
                     }, error => {
                         console.error(error);
-                        this.alert("Não foi possível realizar seu login. Verifique seu email e senha e tente novamente mais tarde!")
+                        this.alert("Não foi possível realizar seu cadastro. Tente novamente mais tarde!")
                     });
                 }
-                
-            },
-            goCustomerRegistration(){
-              this.$navigateTo(CustomerRegistration);
             },
             alert(message) {
                 return alert({
