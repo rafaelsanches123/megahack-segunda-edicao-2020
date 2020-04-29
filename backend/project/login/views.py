@@ -3,6 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from rest_framework import generics
 from rest_framework.response import Response
 from .models import LoginModel
+from .models import CadastroModel
 from .serializers import LoginSerializer
 from .tasks import function_1
 
@@ -20,7 +21,15 @@ class LoginView(generics.ListCreateAPIView):
     serializer_class = LoginSerializer
            
     def get(self, request):
-        return Response({'message': 'API com POST'}, status=200)
+        return Response({'message': 'Método GET'}, status=200)
         
     def post(self, request):
-        return Response({'message': 'Criar métodos para o login'}, status=200)
+        _json = request.data
+        data = CadastroModel.objects.filter(user=_json['usuario'])
+        # faz login
+        if data:
+            # register = LoginModel(user=_json['user'], password=_json['password'])
+            # register.save()
+            return Response({'message': 'Login realizado com sucesso!'}, status=200)
+        else:
+            return Response({'message': 'Erro: Usuário não cadastrado.'}, status=400)

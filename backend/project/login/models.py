@@ -5,8 +5,9 @@ class LoginModel(models.Model):
     
     class Meta:
         db_table = 'login'
-    user = models.TextField()
-    password = models.TextField()
+    
+    usuario = models.CharField(max_length=50)
+    senha = models.TextField()
     
     def __str__(self):
-        return self.user
+        return self.usuario
