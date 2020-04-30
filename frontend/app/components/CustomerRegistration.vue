@@ -27,7 +27,7 @@
 
                 <StackLayout class="">
                     <Label class="header" text="CADASTRAR-ME" />
-                    <Label class="sub-header" text="Aqui é o primeiro passo para mudar a saúde da sua vida financeira!" />
+                    <Label row="1" textWrap="true" class="sub-header" text="Aqui é o primeiro passo para mudar a saúde da sua vida financeira!" />
                 </StackLayout>
 
                 <TextField class="inputs-text" v-model="textFieldName"  hint="NOME COMPLETO"/>
@@ -37,6 +37,13 @@
                 <TextField class="inputs-text" v-model="textFieldEmail"  hint="E-MAIL"/>
 
                 <TextField class="inputs-text" v-model="textFieldPassword"  hint="SENHA"/>
+
+                <GridLayout rows="auto" columns="auto, *">
+                    <TextField class="inputs-text" v-model="textFieldDDD"  hint="DDD" col="0" row="0" />
+                    <TextField class="inputs-text" v-model="textFieldSmartPhone"  hint="CELULAR" col="1" row="0"/>
+                </GridLayout>
+
+                <TextField class="inputs-text" v-model="textFieldMediaApentMonthlyOnFood"  hint="MÉDIA DO GASTO MENSAL COM ALIMENTAÇÃO"/>
 
 
                 <Button class="btn-primary" text="CRIAR MINHA CONTA" @tap="validateRegistration" />
@@ -56,10 +63,13 @@
     export default {
         data() {
             return {
-                textFieldName        : "",
-                textFieldNickname    : "",
-                textFieldEmail       : "",
-                textFieldPassword    : ""
+                textFieldName                    : "",
+                textFieldNickname                : "",
+                textFieldEmail                   : "",
+                textFieldPassword                : "",
+                textFieldDDD                     : "",
+                textFieldSmartPhone              : "",
+                textFieldMediaApentMonthlyOnFood : ""
             }
         },
         mounted() {
@@ -73,7 +83,7 @@
                 utils.showDrawer();
             },
             validateRegistration() {
-                if (this.textFieldName == "" || this.textFieldNickname == "" || this.textFieldEmail == "" || this.textFieldPassword == "") {
+                if (this.textFieldName == "" || this.textFieldNickname == "" || this.textFieldEmail == "" || this.textFieldPassword == "" || this.textFieldDDD == "" || this.textFieldSmartPhone == "" || this.textFieldMediaApentMonthlyOnFood == "") {
                     this.alert(
                         "Por favor, todos os dados são obrigatórios o seu preenchimento!"
                     )
@@ -87,7 +97,10 @@
                         name: this.textFieldName,
                         nickname: this.textFieldNickname,
                         email: this.textFieldEmail,
-                        password: this.textFieldPassword
+                        password: this.textFieldPassword,
+                        ddd: this.textFieldDDD,
+                        phone: this.textFieldSmartPhone,
+                        spent: this.textFieldMediaApentMonthlyOnFood
                     })
                     }).then(response => {
                     
