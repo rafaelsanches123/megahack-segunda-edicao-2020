@@ -10,4 +10,4 @@ class CadastroModel(models.Model):
     senha = models.CharField(max_length=10)
 
     def __str__(self):
-        return self.cad_usuario
+        return self.usuario

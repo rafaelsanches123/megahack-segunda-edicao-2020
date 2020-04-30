@@ -20,7 +20,7 @@ class CadastroView(generics.ListCreateAPIView):
         
     def post(self, request):
         _json = request.data
-        data = CadastroModel.objects.filter(user=_json['usuario'])
+        data = CadastroModel.objects.filter(usuario=_json['usuario'])
         if not data:
             # faz cadastro
             register = CadastroModel(
