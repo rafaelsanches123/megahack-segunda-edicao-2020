@@ -20,6 +20,7 @@
         </ActionBar>
 
         <GridLayout class="page__content">
+            
             <Label class="page__content-icon fas" text.decode="&#xf015;"></Label>
             <Label class="page__content-placeholder" :text="message"></Label>
         </GridLayout>
