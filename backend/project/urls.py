@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers, viewsets, routers
 
 from project.login.views import LoginView
+from project.cadastro.views import CadastroView
 
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -45,5 +46,6 @@ urlpatterns = [
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('admin/', admin.site.urls),
-    path('login/', LoginView.as_view())
+    path('login/', LoginView.as_view()),
+    path('cadastro/', CadastroView.as_view()),
 ]
