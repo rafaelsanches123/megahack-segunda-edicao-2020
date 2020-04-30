@@ -32,6 +32,8 @@ class CadastroView(generics.ListCreateAPIView):
             return Response({'message': 'renda não informada.'}, status=400)
         if not 'email' in _json:
             return Response({'message': 'email não informado.'}, status=400)
+        if not 'gastos' in _json:
+            return Response({'message': 'gastos não informado.'}, status=400)
         if not 'celular' in _json:
             return Response({'message': 'celular não informado.'}, status=400)
         data = CadastroModel.objects.filter(usuario=_json['usuario'])
@@ -42,6 +44,7 @@ class CadastroView(generics.ListCreateAPIView):
                 nome=_json['nome'],
                 senha=_json['senha'],
                 apelido=_json['apelido'],
+                gastos=_json['gastos'],
                 renda=_json['renda'],
                 email=_json['email'],
                 celular=_json['celular']
