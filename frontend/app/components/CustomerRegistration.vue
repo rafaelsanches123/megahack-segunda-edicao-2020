@@ -91,7 +91,7 @@
                 }
                 else {
                     http.request({
-                    url: "http://localhost:8000/cadastro",
+                    url: "http://localhost:8000/cadastro/",
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     content: JSON.stringify({
@@ -100,7 +100,7 @@
                         email: this.textFieldEmail,
                         password: this.textFieldPassword,
                         ddd: this.textFieldDDD,
-                        phone: this.textFieldSmartPhone,
+                        celular: this.textFieldSmartPhone,
                         spent: this.textFieldMediaApentMonthlyOnFood
                     })
                     }).then(response => {
