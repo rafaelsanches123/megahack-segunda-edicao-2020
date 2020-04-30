@@ -20,6 +20,20 @@ class CadastroView(generics.ListCreateAPIView):
         
     def post(self, request):
         _json = request.data
+        if not 'usuario' in _json:
+            return Response({'message': 'usuario não informado.'}, status=400)
+        if not 'senha' in _json:
+            return Response({'message': 'senha não informada.'}, status=400)
+        if not 'nome' in _json:
+            return Response({'message': 'nome não informado.'}, status=400)
+        if not 'apelido' in _json:
+            return Response({'message': 'apelido não informado.'}, status=400)
+        if not 'renda' in _json:
+            return Response({'message': 'renda não informada.'}, status=400)
+        if not 'email' in _json:
+            return Response({'message': 'email não informado.'}, status=400)
+        if not 'celular' in _json:
+            return Response({'message': 'celular não informado.'}, status=400)
         data = CadastroModel.objects.filter(usuario=_json['usuario'])
         if not data:
             # faz cadastro
