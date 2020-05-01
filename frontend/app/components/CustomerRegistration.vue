@@ -43,6 +43,8 @@
                     <TextField class="inputs-text" type="number" v-model="textFieldSmartPhone"  hint="CELULAR" col="1" row="0"/>
                 </GridLayout>
 
+                <TextField class="inputs-text" type="number" v-model="textFieldNetSalary"  hint="RENDA MENSAL"/>
+
                 <TextField class="inputs-text" type="number" v-model="textFieldMediaApentMonthlyOnFood"  hint="MÉDIA DO GASTO MENSAL COM ALIMENTAÇÃO"/>
 
 
@@ -59,6 +61,7 @@
     import * as utils from "~/shared/utils";
     import SelectedPageService from "../shared/selected-page-service";
     import * as http from "http";
+    import Login from "./Login";
 
     export default {
         data() {
@@ -69,6 +72,7 @@
                 textFieldPassword                : "",
                 textFieldDDD                     : "",
                 textFieldSmartPhone              : "",
+                textFieldNetSalary               : "",
                 textFieldMediaApentMonthlyOnFood : ""
             }
         },
@@ -83,43 +87,37 @@
                 utils.showDrawer();
             },
             validateRegistration() {
-                try{
-                if (this.textFieldName == "" || this.textFieldNickname == "" || this.textFieldEmail == "" || this.textFieldPassword == "" || this.textFieldDDD == "" || this.textFieldSmartPhone == "" || this.textFieldMediaApentMonthlyOnFood == "") {
+                if (this.textFieldName == "" || this.textFieldNickname == "" || this.textFieldEmail == "" || this.textFieldPassword == "" || this.textFieldDDD == "" || this.textFieldSmartPhone == "" || this.textFieldMediaApentMonthlyOnFood == "" || this.textFieldNetSalary == "") {
                     this.alert(
                         "Por favor, todos os dados são obrigatórios o seu preenchimento!"
                     )
                 }
                 else {
                     http.request({
-                    url: "http://localhost:8000/cadastro/",
+                    url: "http://10.0.2.2:8000/cadastro/",
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     content: JSON.stringify({
-                        name: this.textFieldName,
-                        nickname: this.textFieldNickname,
-                        email: this.textFieldEmail,
-                        password: this.textFieldPassword,
-                        ddd: this.textFieldDDD,
-                        celular: this.textFieldSmartPhone,
-                        spent: this.textFieldMediaApentMonthlyOnFood
+                        'nome'     :    this.textFieldName,
+                        'apelido'  :    this.textFieldNickname,
+                        'email'    :    this.textFieldEmail,
+                        'senha'    :    this.textFieldPassword,
+                        'celular'  :    this.textFieldDDD+this.textFieldSmartPhone,
+                        'renda'    :    this.textFieldNetSalary,
+                        'gasto'    :    this.textFieldMediaApentMonthlyOnFood
                     })
                     }).then(response => {
                     
                     var result = response.content.toJSON();
-                    if(result == True){
-                        this.alert("Parabéns seu cadastro foi realizado com sucesso! Verifique seu email cadastrado nele conterá seu login e senha para acessar o app!")
-                    }else{
-                        this.alert("Não foi possível realizar seu cadastro. Tente novamente mais tarde!")
+                    this.alert(result.message)
+                    if (response.statusCode == 200){
+                        this.$navigateTo(Login);
                     }
-                    
 
                     }, error => {
                         console.error(error);
-                        this.alert("Não foi possível realizar seu cadastro. Tente novamente mais tarde!")
+                        this.alert("Erro com a conexão ao servidor. Tente novamente mais tarde!")
                     });
-                }
-                }catch (error){
-                    this.alert("Você está sem conexão com a internet ou servidor está fora do ar. Tente novamente mais tarde!")
                 }
             },
             alert(message) {
