@@ -5,6 +5,7 @@ class CadastroModel(models.Model):
     nome = models.CharField(max_length=50)
     apelido = models.CharField(max_length=50)
     renda = models.FloatField()
+    gastos = models.FloatField()
     email = models.CharField(max_length=50)
     celular = models.CharField(max_length=15)
     senha = models.CharField(max_length=10)
