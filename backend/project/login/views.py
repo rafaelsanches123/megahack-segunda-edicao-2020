@@ -24,16 +24,16 @@ class LoginView(generics.ListCreateAPIView):
 
     def post(self, request):
         _json = request.data
-        if not 'usuario' in _json:
-            return Response({'message': 'usuario não informado.'}, status=400)
+        if not 'email' in _json:
+            return Response({'message': 'usuario/email não informado.'}, status=400)
         if not 'senha' in _json:
             return Response({'message': 'senha não informada.'}, status=400)
-        data = CadastroModel.objects.filter(usuario=_json['usuario'])
+        data = CadastroModel.objects.filter(email=_json['email'])
         # faz login
         if data:
             match = False
             for p in CadastroModel.objects.all():
-                if p.senha == _json['senha'] and _json['usuario'] == p.usuario:
+                if p.senha == _json['senha'] and _json['email'] == p.email:
                     match = True
             if match:
                 return Response({'message': 'Login realizado com sucesso!'}, status=200)
