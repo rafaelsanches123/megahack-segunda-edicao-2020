@@ -6,18 +6,23 @@
             because ActionItems are shown on the right side of the ActionBar
             -->
             
+            <!--
             <NavigationButton ios:visibility="collapsed" icon="res://menu" @tap="onDrawerButtonTap"></NavigationButton>
-            
+            -->
+
             <!--
             Use the ActionItem for IOS with position set to left. Using the
             NavigationButton as a side-drawer button in iOS is not possible,
             because its function is to always navigate back in the application.
             -->
+            
+            <!--
             <ActionItem icon="res://menu"
                 android:visibility="collapsed"
                 @tap="onDrawerButtonTap"
                 ios.position="left">
             </ActionItem>
+            -->
             <Label class="action-bar-title" text="Seja-bem vindo(a)!"></Label>
         </ActionBar>
 
@@ -31,7 +36,7 @@
                     <Label class="sub-header" text="O app que vai mudar sua saúde financeira!" />
                 </StackLayout>
 
-                <TextField class="inputs-text" v-model="textFieldLogin"  hint="LOGIN"/>
+                <TextField class="inputs-text" v-model="textFieldLogin"  hint="E-MAIL"/>
 
                 <TextField class="inputs-text" v-model="textFieldPassword"  hint="SENHA"/>
 
@@ -79,30 +84,29 @@
                         "Por favor, seu email e senha são obrigatórios!"
                     )
                 }
-                else {
+                else {    
                     http.request({
-                    url: "http://localhost:8000/login",
+                    url: "http://10.0.2.2:8000/login/",
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     content: JSON.stringify({
-                        email: this.textFieldLogin,
-                        password: this.textFieldPassword
+                        'email': this.textFieldLogin,
+                        'senha': this.textFieldPassword
                     })
                     }).then(response => {
                     
                     var result = response.content.toJSON();
-                    if(result == True){
-                        this.alert("Login efetuado com sucesso!")
-                        this.$navigateTo(CustomerRegistration);
-                    }else{
-                        this.alert("Não foi possível realizar seu login. Verifique seu email e senha e tente novamente mais tarde!")
+                    this.alert(result.message)
+                    if (response.statusCode == 200){
+                        this.$navigateTo(Home);
                     }
-                    
+
                     }, error => {
                         console.error(error);
-                        this.alert("Não foi possível realizar seu login. Verifique seu email e senha e tente novamente mais tarde!")
+                        this.alert("Erro com a conexão ao servidor. Tente novamente mais tarde!")
                     });
-                }
+                    
+                    }
                 
             },
             goCustomerRegistration(){
