@@ -34,16 +34,16 @@
 
                 <TextField class="inputs-text" v-model="textFieldNickname"  hint="COMO QUER SER CHAMADO (ex:APELIDO)"/>
 
-                <TextField class="inputs-text" v-model="textFieldEmail"  hint="E-MAIL"/>
+                <TextField class="inputs-text" type="email" v-model="textFieldEmail"  hint="E-MAIL"/>
 
                 <TextField class="inputs-text" v-model="textFieldPassword"  hint="SENHA"/>
 
                 <GridLayout rows="auto" columns="auto, *">
-                    <TextField class="inputs-text" v-model="textFieldDDD"  hint="DDD" col="0" row="0" />
-                    <TextField class="inputs-text" v-model="textFieldSmartPhone"  hint="CELULAR" col="1" row="0"/>
+                    <TextField class="inputs-text" type="number" v-model="textFieldDDD"  hint="DDD" col="0" row="0" />
+                    <TextField class="inputs-text" type="number" v-model="textFieldSmartPhone"  hint="CELULAR" col="1" row="0"/>
                 </GridLayout>
 
-                <TextField class="inputs-text" v-model="textFieldMediaApentMonthlyOnFood"  hint="MÉDIA DO GASTO MENSAL COM ALIMENTAÇÃO"/>
+                <TextField class="inputs-text" type="number" v-model="textFieldMediaApentMonthlyOnFood"  hint="MÉDIA DO GASTO MENSAL COM ALIMENTAÇÃO"/>
 
 
                 <Button class="btn-primary" text="CRIAR MINHA CONTA" @tap="validateRegistration" />
@@ -83,6 +83,7 @@
                 utils.showDrawer();
             },
             validateRegistration() {
+                try{
                 if (this.textFieldName == "" || this.textFieldNickname == "" || this.textFieldEmail == "" || this.textFieldPassword == "" || this.textFieldDDD == "" || this.textFieldSmartPhone == "" || this.textFieldMediaApentMonthlyOnFood == "") {
                     this.alert(
                         "Por favor, todos os dados são obrigatórios o seu preenchimento!"
@@ -90,7 +91,7 @@
                 }
                 else {
                     http.request({
-                    url: "http://localhost:8000/cadastro",
+                    url: "http://localhost:8000/cadastro/",
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     content: JSON.stringify({
@@ -99,7 +100,7 @@
                         email: this.textFieldEmail,
                         password: this.textFieldPassword,
                         ddd: this.textFieldDDD,
-                        phone: this.textFieldSmartPhone,
+                        celular: this.textFieldSmartPhone,
                         spent: this.textFieldMediaApentMonthlyOnFood
                     })
                     }).then(response => {
@@ -116,6 +117,9 @@
                         console.error(error);
                         this.alert("Não foi possível realizar seu cadastro. Tente novamente mais tarde!")
                     });
+                }
+                }catch (error){
+                    this.alert("Você está sem conexão com a internet ou servidor está fora do ar. Tente novamente mais tarde!")
                 }
             },
             alert(message) {
