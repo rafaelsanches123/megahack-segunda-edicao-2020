@@ -7,7 +7,7 @@ class LoginModel(models.Model):
         db_table = 'login'
     
     usuario = models.CharField(max_length=50)
-    senha = models.TextField()
+    senha = models.CharField(max_length=10)
     
     def __str__(self):
         return self.usuario
