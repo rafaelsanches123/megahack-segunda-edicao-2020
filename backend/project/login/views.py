@@ -24,8 +24,9 @@ class LoginView(generics.ListCreateAPIView):
 
     def post(self, request):
         _json = request.data
+        print(_json)
         if not 'email' in _json:
-            return Response({'message': 'usuario/email não informado.'}, status=400)
+            return Response({'message': 'email não informado.'}, status=400)
         if not 'senha' in _json:
             return Response({'message': 'senha não informada.'}, status=400)
         data = CadastroModel.objects.filter(email=_json['email'])
