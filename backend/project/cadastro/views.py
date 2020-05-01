@@ -19,7 +19,24 @@ class CadastroView(generics.ListCreateAPIView):
     serializer_class = CadastroSerializer
 
     def get(self, request):
-        return Response({'message': 'Método GET'}, status=200)
+        # request
+        # http://localhost:8000/cadastro/?email=fulano@gmail.com
+        _json = request.query_params
+        if 'email' in _json:
+            # pesquisa pelo usuário
+            query = CadastroModel.objects.filter(email=_json['email'])
+            if query:
+                for p in CadastroModel.objects.all():
+                    if p.email == _json['email']:
+                        return Response(
+                            {   
+                                'renda': p.renda, 
+                                'gasto': p.gasto,
+                                'apelido': p.apelido,
+                                'celular': p.celular,
+                                'nome': p.nome
+                            }, status=200)
+            return Response({'message': 'Usuário não identificado'}, status=401)
 
     def post(self, request):
         _json = request.data
