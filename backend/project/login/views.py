@@ -24,6 +24,10 @@ class LoginView(generics.ListCreateAPIView):
 
     def post(self, request):
         _json = request.data
+        if not 'usuario' in _json:
+            return Response({'message': 'usuario não informado.'}, status=400)
+        if not 'senha' in _json:
+            return Response({'message': 'senha não informada.'}, status=400)
         data = CadastroModel.objects.filter(usuario=_json['usuario'])
         # faz login
         if data:
