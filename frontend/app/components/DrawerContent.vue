@@ -13,26 +13,17 @@
                         <Label col="1" text="Home" class="p-r-10"></Label>
                     </GridLayout>
 
-                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Browse' ? ' -selected': '')" @tap="onNavigationItemTap(Browse)">
-                        <Label col="0" text.decode="&#xf1ea;" class="nt-icon far"></Label>
-                        <Label col="1" text="Browse" class="p-r-10"></Label>
+                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Ranking' ? ' -selected': '')" @tap="onNavigationItemTap(Ranking)">
+                        <Label col="0" text.decode="&#xf015;" class="nt-icon fas"></Label>
+                        <Label col="1" text="Ranking" class="p-r-10"></Label>
                     </GridLayout>
 
-                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Search' ? ' -selected': '')" @tap="onNavigationItemTap(Search)">
-                        <Label col="0" text.decode="&#xf002;" class="nt-icon fas"></Label>
-                        <Label col="1" text="Search" class="p-r-10"></Label>
-                    </GridLayout>
-
-                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Featured' ? ' -selected': '')" @tap="onNavigationItemTap(Featured)">
-                        <Label col="0" text.decode="&#xf005;" class="nt-icon fas"></Label>
-                        <Label col="1" text="Featured" class="p-r-10"></Label>
-                    </GridLayout>
         
                     <StackLayout class="hr"></StackLayout>
 
                     <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Settings' ? ' -selected': '')" @tap="onNavigationItemTap(Settings)">
                         <Label col="0" text.decode="&#xf013;" class="nt-icon fas"></Label>
-                        <Label col="1" text="Settings" class="p-r-10"></Label>
+                        <Label col="1" text="Preferências" class="p-r-10"></Label>
                     </GridLayout>
                 </StackLayout>
             </ScrollView>
@@ -42,9 +33,7 @@
 <script>
     import Login from "./Login";
     import Home from "./Home";
-    import Browse from "./Browse";
-    import Featured from "./Featured";
-    import Search from "./Search";
+    import Ranking from "./Ranking";
     import Settings from "./Settings";
     import * as utils from "~/shared/utils";
     import SelectedPageService from "~/shared/selected-page-service";    
@@ -58,9 +47,7 @@
             return {
                 Login: Login,
                 Home: Home,
-                Browse: Browse,
-                Featured: Featured,
-                Search: Search,
+                Ranking: Ranking,
                 Settings: Settings,
                 selectedPage: ""
             };
@@ -68,9 +55,7 @@
         components: {
             Login,
             Home,
-            Browse,
-            Featured,
-            Search,
+            Ranking,
             Settings
         },
         methods: {
