@@ -24,7 +24,6 @@ class LoginView(generics.ListCreateAPIView):
 
     def post(self, request):
         _json = request.data
-        print(_json)
         if not 'email' in _json:
             return Response({'message': 'email não informado.'}, status=400)
         if not 'senha' in _json:
