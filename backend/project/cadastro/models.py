@@ -1,14 +1,14 @@
 from django.db import models
 
+
 class CadastroModel(models.Model):
-    usuario = models.CharField(max_length=50, primary_key=True)
-    nome = models.CharField(max_length=50)
-    apelido = models.CharField(max_length=50)
-    renda = models.FloatField()
-    gastos = models.FloatField()
-    email = models.CharField(max_length=50)
+    email = models.CharField(max_length=100, primary_key=True)
+    senha = models.CharField(max_length=50)
+    nome = models.CharField(max_length=100)
+    apelido = models.CharField(max_length=100)
     celular = models.CharField(max_length=15)
-    senha = models.CharField(max_length=10)
+    renda = models.FloatField()
+    gasto = models.FloatField()
 
     def __str__(self):
-        return self.usuario
+        return self.email
