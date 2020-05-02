@@ -5,7 +5,7 @@ import DrawerContent from "./components/DrawerContent";
 import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
 Vue.use(RadSideDrawer);
 
-import Home from "./components/Home";
+import Ranking from "./components/Ranking";
 
 Vue.config.silent = (TNS_ENV === 'production');
 
@@ -15,7 +15,7 @@ new Vue({
           App,
           [
             h(DrawerContent, { slot: 'drawerContent' }),
-            h(Home, { slot: 'mainContent' })
+            h(Ranking, { slot: 'mainContent' })
             //h(Login, { slot: 'mainContent' })
           ]
         )

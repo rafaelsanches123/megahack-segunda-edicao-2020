@@ -25,10 +25,28 @@
                 <Image class="logo" src="~/images/meta.png" stretch="none" />
                 <Label class="header" text="MINHA META!" />
                 <Label class="sub-header" :text="meta" />
-
                 <Label class="time-meta" :text="tempo_meta" />
-
             </StackLayout>
+
+             <StackLayout orientation="horizontal" class="resultado-diario">
+                <StackLayout class="gastando">
+                    <StackLayout width="40%" class="">
+                        <Label text="GASTANDO" />
+                    </StackLayout>
+                    <StackLayout width="40%" class="">
+                        <Label text="R$ 400.00" />
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout class="economizando">
+                    <StackLayout width="60%" class="">
+                        <Label text="ECONOMIZANDO" />
+                    </StackLayout>
+                    <StackLayout width="60%" class="">
+                        <Label text="R$ 600.00" />
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        
 
             <StackLayout class="">
                 <Label class="extrato" text="EXTRATO MENSAL DE CONSUMO" />
@@ -38,15 +56,15 @@
             <ListView class="list-view" for="item in gasto_mensal">
             <v-template>
                 <GridLayout columns="2*, *" rows="*, *" class="lista-item"> 
-                    <StackLayout row="0" col="0" class="">
+                    <StackLayout row="0" col="0" class="titulo-parceiro">
                         <Label :text="item.nome" />
                     </StackLayout>
-                    <StackLayout row="0" col="1" class="">
+                    <StackLayout row="0" col="1" class="valor-produto-parceiro">
                         <Label :text="item.valor" />
                     </StackLayout>
-                    <!--<StackLayout row="1" col="0" class="">
+                    <StackLayout row="1" col="0" class="">
                         <Label :text="item.tipo" />
-                    </StackLayout>-->
+                    </StackLayout>
                 </GridLayout>
             </v-template>
             </ListView>
@@ -75,55 +93,55 @@
                         {
                             nome:"Rancho da Picanha",
                             data:"01/05/2020",
-                            valor:50.00,
+                            valor:-50.00,
                             tipo:"Restaurante",
                         },
                         {
-                            nome:"Cachaçaria Água Doce - São Carlos",
+                            nome:"Cachaçaria Água Doce",
                             data:"02/05/2020",
-                            valor:25.75,
+                            valor:-25.75,
                             tipo:"Restaurante"
                         },
                         {
-                            nome:"Burguer King - São Carlos",
+                            nome:"Burguer King",
                             data:"03/05/2020",
-                            valor:55.10,
-                            tipo:"Restaurante"
+                            valor:-55.10,
+                            tipo:"Fastfood"
                         },
                         {
-                            nome:"MacDonald - São Carlos",
+                            nome:"MacDonald",
                             data:"01/05/2020",
-                            valor:52.00,
-                            tipo:"Restaurante"
+                            valor:-52.00,
+                            tipo:"Fastfood"
                         },
                         {
                             nome:"Pagani Pizzas e Esfirras",
                             data:"02/05/2020",
-                            valor:14.75,
-                            tipo:"Restaurante"
+                            valor:-14.75,
+                            tipo:"Pizzaria"
                         },
                         {
-                            nome:"Lanchonete do Juca - São Carlos",
+                            nome:"Lanchonete do Juca",
                             data:"03/05/2020",
-                            valor:12.10,
-                            tipo:"Restaurante"
+                            valor:-12.10,
+                            tipo:"Lanchonete"
                         },
                         {
-                            nome:"Donatello Pizzaria - São Carlos",
+                            nome:"Donatello Pizzaria",
                             data:"01/05/2020",
-                            valor:32.00,
-                            tipo:"Restaurante"
+                            valor:-32.00,
+                            tipo:"Pizzaria"
                         },
                         {
                             nome:"Sorveteria Parra",
                             data:"02/05/2020",
-                            valor:19.75,
-                            tipo:"Restaurante"
+                            valor:-19.75,
+                            tipo:"Sorveteria"
                         },
                         {
-                            nome:"Self Service Trevo - São Carlos",
+                            nome:"Self Service Trevo",
                             data:"03/05/2020",
-                            valor:45.10,
+                            valor:-45.10,
                             tipo:"Restaurante"
                         }
                     ]
@@ -186,9 +204,9 @@
     }
     .extrato-data{
         horizontal-align: center;
-        font-weight: 700;
+        font-weight: 500;
         font-size: 18;
-        font-weight: 300;
+        
         padding-left: 15%;
     }
     body{
@@ -201,5 +219,27 @@
     }
     .list-view{
         padding: 0px 20%;
+    }
+    .resultado-diario{
+        horizontal-align: center;
+        text-align: center;
+        font-size: 15%;
+    }
+    .gastando{
+        color: red;
+        horizontal-align: center;
+        text-align: center;
+    }
+    .economizando{
+        color: green;
+        horizontal-align: center;
+        text-align: center;
+    }
+    .titulo-parceiro{
+        font-weight: 500;
+    }
+    .valor-produto-parceiro{
+        color: red;
+        font-weight: 500;
     }
 </style>
