@@ -3,9 +3,6 @@ services:
     db:
         container_name: postgres
         image: postgres
-#        build:
-#            context: .
-#            dockerfile: postgres/Dockerfile
         environment:
             - POSTGRES_DB=postgres
             - POSTGRES_USER=postgres
@@ -22,4 +19,3 @@ services:
             - "8000:8000"
         depends_on:
             - db
-

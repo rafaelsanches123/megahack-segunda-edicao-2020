@@ -1,0 +1,7 @@
+version: "3"
+services:
+    data_fake:
+        container_name: data_fake
+        build: .
+        command: python preenchimento_ranking.py
+
