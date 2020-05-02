@@ -12,3 +12,7 @@
 
 - http://localhost:8000/login/
 - http://localhost:8000/swagger/
+
+### Gerar dados Fake para o bd no backend
+- cd dados/
+- docker-compose up --build

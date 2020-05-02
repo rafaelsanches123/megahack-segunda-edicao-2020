@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'project.login',
     'project.ranking',
     'project.cadastro',
+    'project.meta',
+    'project.dica',
     'rest_framework',
     'drf_yasg',
 ]
