@@ -3,17 +3,16 @@ from __future__ import absolute_import, unicode_literals
 from rest_framework import generics
 from rest_framework.response import Response
 from .models import CadastroModel
+from project.meta.models import MetaModel
 from .serializers import CadastroSerializer
 
 import os
 import io
 import json
-import uuid
-
 
 class CadastroView(generics.ListCreateAPIView):
     '''
-        Exemplo de POST login: 127.0.0.1:8000/cadastro/
+        Exemplo de POST cadastro: 127.0.0.1:8000/cadastro/
     '''
     queryset = CadastroModel.objects.all()
     serializer_class = CadastroSerializer
@@ -37,10 +36,11 @@ class CadastroView(generics.ListCreateAPIView):
                                 'nome': p.nome
                             }, status=200)
             return Response({'message': 'Usuário não identificado'}, status=401)
+        else:
+            return Response({'message': 'Email não informado'}, status=401)
 
     def post(self, request):
         _json = request.data
-        print(_json)
         if not 'nome' in _json:
             return Response({'message': 'nome não informado.'}, status=400)
 
@@ -76,6 +76,14 @@ class CadastroView(generics.ListCreateAPIView):
                 celular=_json['celular']
             )
             register.save()
+            meta = MetaModel(
+                descricao='',
+                email=_json['email'],
+                valor=0.00,
+                data_inicial='',
+                data_final=''
+            )
+            meta.save()
             return Response({'message': 'Cadastro realizado com sucesso!'}, status=200)
         else:
             return Response({'message': 'Erro: Usuário já cadastrado.'}, status=400)

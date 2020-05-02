@@ -18,7 +18,7 @@ class RankingView(generics.ListCreateAPIView):
         resp = []
         for p in RankingModel.objects.all():
             resp.append({   
-                'nome_restaurante': p.nome_restaurate, 
+                'nome_restaurante': p.nome_restaurante, 
                 'valor_prato': p.valor_prato,
                 'numero_estrelas_prato': p.numero_estrelas_prato,
                 'numero_estrelas_valor': p.numero_estrelas_valor
