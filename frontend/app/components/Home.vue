@@ -57,7 +57,7 @@
             <v-template>
                 <GridLayout columns="2*, *" rows="*, *" class="lista-item"> 
                     <StackLayout row="0" col="0" class="titulo-parceiro">
-                        <Label :text="item.nome" />
+                        <Label textWrap="true" :text="item.nome" />
                     </StackLayout>
                     <StackLayout row="0" col="1" class="valor-produto-parceiro">
                         <Label :text="item.valor" />

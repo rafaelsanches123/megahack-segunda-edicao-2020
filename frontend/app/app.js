@@ -4,6 +4,10 @@ import Login from "./components/Login";
 import DrawerContent from "./components/DrawerContent";
 import RadSideDrawer from "nativescript-ui-sidedrawer/vue";
 Vue.use(RadSideDrawer);
+Vue.registerElement(
+  "StarRating",
+  () => require("nativescript-star-ratings").StarRating
+);
 
 import Ranking from "./components/Ranking";
 
