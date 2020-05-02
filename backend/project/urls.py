@@ -12,6 +12,7 @@ from rest_framework import serializers, viewsets, routers
 
 from project.login.views import LoginView
 from project.cadastro.views import CadastroView
+from project.ranking.views import RankingView
 
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -48,4 +49,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', LoginView.as_view()),
     path('cadastro/', CadastroView.as_view()),
+    path('ranking/', RankingView.as_view()),
 ]
