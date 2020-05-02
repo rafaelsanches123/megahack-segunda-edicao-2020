@@ -38,7 +38,7 @@
                     </FormattedString>
                 </Label>
                 <StackLayout class="tip-partner">
-                    <Webview src="https://mepoupenaweb.uol.com.br/videos/tudo-sobre-reserva-de-emergencia/"></Webview>
+                    <Webview src="https://www.youtube.com/watch?v=shfYMvEXqm4&feature=emb_title"></Webview>
                 </StackLayout>
             </StackLayout>
 
@@ -56,12 +56,12 @@
     export default {
         data() {
             return {
-                descricao_dica:"Você sabe o que é reserva de emergência? Uma reserva de emergência é quantia de dinheiro referente ao quanto você gasta de dinheiro para viver durante 1 mês e você multiplica esse valor por 6! Esse dinheiro você usa para situações nas quais aconteça algum problema com você como perder o emprego e até mesmo em uma pandemia! Reflita sobre isso e comece agora e não se preocupe vamos te ajudar!",
+                descricao_dica:"Você sabe o que é reserva de emergência? Uma reserva de emergência é quantia de dinheiro referente ao quanto você gasta de dinheiro para viver durante 1 mês e você multiplica esse valor por 6! Esse dinheiro você usa para situações nas quais aconteça algum problema com você como perder o emprego e até mesmo em uma pandemia! Reflita sobre isso e comece agora mesmo a montar sua reserva de emergência e não se preocupe, vamos te ajudar!",
                 data_atual: new Date(),
                 sub_text: "Bora aprender mais sobre educação financeira!",
                 partner: "Continue aprendendo sobre esse conteúdo com a nossa parceira",
                 partner_name: "Nathalia Arcuri",
-                link_partner: 'https://mepoupenaweb.uol.com.br/videos/tudo-sobre-reserva-de-emergencia/'
+                link_partner: 'https://www.youtube.com/watch?v=shfYMvEXqm4&feature=emb_title'
             }
         },
         mounted() {
