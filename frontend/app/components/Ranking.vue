@@ -16,24 +16,29 @@
                 @tap="onDrawerButtonTap"
                 ios.position="left">
             </ActionItem>
-            <Label class="action-bar-title" text="Ranking"></Label>
+            <Label class="action-bar-title" text="Recomendação do Dia"></Label>
         </ActionBar>
 
         <StackLayout class="page__content">
             <StackLayout class="">
-                <Image class="logo" src="~/images/ranking.png" stretch="none" />
-                <Label class="header" text="RANKING PARCEIROS" />
+                <Image class="logo" src="~/images/recomendation.png" width="100" height="100" stretch="aspectFill" />
+                <Label class="header" text="RECOMENDAÇÃO DO DIA" />
                 <Label class="sub-header" textWrap="true" text="Coma por um preço justo, com boa qualidade e por indicação de outros salvadores!" />
             </StackLayout>
 
             <ListView class="list-view" for="item in lista_ranking">
             <v-template>
                 <GridLayout columns="2*, *" rows="*, *" class="lista-item"> 
-                    <StackLayout row="0" col="0" class="">
+                    <StackLayout row="0" col="0" class="titulo-parceiro">
                         <Label :text="item.nome" />
                     </StackLayout>
-                    <StackLayout row="0" col="1" class="">
-                        <Label :text="item.valor" />
+                    <StackLayout row="0" col="1">
+                        <Label>
+                            <FormattedString>
+                                <Span  text="R$ " fontWeight="bold" />
+                                <Span :text="formatPrice(item.valor)" fontWeight="bold" />
+                            </FormattedString>
+                        </Label>
                     </StackLayout>
                     <StackLayout class="" orientation="horizontal" row="1" col="0">
                         <StarRating emptyBorderColor="black" emptyColor="white" filledBorderColor="black" filledColor="yellow" :value="item.numero_estrelas_prato" max="5"/>
@@ -130,6 +135,10 @@
         methods: {
             onDrawerButtonTap() {
                 utils.showDrawer();
+            },
+            formatPrice(value) {
+                let val = (value/1).toFixed(2).replace('.', ',')
+                return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
             }
         }
     };
@@ -166,5 +175,8 @@
     }
     .list-view{
         padding: 0px 5%;
+    }
+    .titulo-parceiro{
+        font-weight: 500;
     }
 </style>
