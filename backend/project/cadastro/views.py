@@ -84,6 +84,7 @@ class CadastroView(generics.ListCreateAPIView):
                 data_final=''
             )
             meta.save()
+            
             return Response({'message': 'Cadastro realizado com sucesso!'}, status=200)
         else:
             return Response({'message': 'Erro: Usuário já cadastrado.'}, status=400)
