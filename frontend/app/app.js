@@ -8,7 +8,12 @@ Vue.registerElement(
   () => require("nativescript-star-ratings").StarRating
 );
 
-import InitialPage from "./components/Tips";
+Vue.registerElement(
+  "BarcodeScanner",
+  () => require("nativescript-barcodescanner").BarcodeScannerView
+);
+
+import InitialPage from "./components/Checking";
 
 Vue.config.silent = (TNS_ENV === 'production');
 

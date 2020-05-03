@@ -13,6 +13,11 @@
                         <Label col="1" text="Home" class="p-r-10"></Label>
                     </GridLayout>
 
+                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Checking' ? ' -selected': '')" @tap="onNavigationItemTap(Checking)">
+                        <Label col="0" text.decode="&#xf015;" class="nt-icon fas"></Label>
+                        <Label col="1" text="Checking" class="p-r-10"></Label>
+                    </GridLayout>
+
                     <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Ranking' ? ' -selected': '')" @tap="onNavigationItemTap(Ranking)">
                         <Label col="0" text.decode="&#xf015;" class="nt-icon fas"></Label>
                         <Label col="1" text="Recomendação do Dia" class="p-r-10"></Label>
@@ -46,6 +51,7 @@
     import Ranking from "./Ranking";
     import Meta from "./Meta";
     import Tips from "./Tips";
+    import Checking from "./Checking";
     import Settings from "./Settings";
     import * as utils from "~/shared/utils";
     import SelectedPageService from "~/shared/selected-page-service";    
@@ -61,6 +67,7 @@
                 Home: Home,
                 Ranking: Ranking,
                 Tips: Tips,
+                Checking: Checking,
                 Settings: Settings,
                 Meta: Meta,
                 selectedPage: ""
@@ -72,6 +79,7 @@
             Ranking,
             Meta,
             Tips,
+            Checking,
             Settings
         },
         methods: {
