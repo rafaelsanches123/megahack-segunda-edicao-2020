@@ -14,6 +14,7 @@
   "dependencies": {
     "@nativescript/theme": "~2.3.3",
     "nativescript-barcodescanner": "^3.4.2",
+    "nativescript-localstorage": "^2.0.1",
     "nativescript-star-ratings": "^1.0.0",
     "nativescript-ui-sidedrawer": "~8.0.0",
     "nativescript-vue": "~2.5.0",

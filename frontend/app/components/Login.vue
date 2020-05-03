@@ -60,40 +60,52 @@
     import Home from "./Home";
     import * as http from "http";
     import * as ApplicationSettings from "application-settings";
-
+    import localStorage from 'nativescript-localstorage';
 
     export default {
         data() {
             return {
-                textFieldLogin    : "",
-                textFieldPassword : "",
+                textFieldLogin    : "rafael.sanches@gmail.com",
+                textFieldPassword : "123",
                 input: {
                     email: "",
-                    senha: ""
-                }
+                    senha: "",
+                    nome: "",
+                    apelido: "",
+                    gasto: "",
+                    renda: "",
+                    celular: "",
+                    minha_meta: ""
+                },
+                url = "http://10.0.2.2:8000/meta/?email="+input.email+""
+
             }
         },
         mounted() {
             SelectedPageService.getInstance().updateSelectedPage("Login");
-            this.$store.subscribe((mutations, state) => {
-                ApplicationSettings.setString("store", JSON.stringify(state));
-                this.input.email = state.cliente.email;
-                this.input.senha = state.cliente.senha;
-            });
         },
         computed: {
 
         },
         methods: {
-            save() {
-                this.$store.commit("save", this.input);
-            },
-            load() {
-                this.$store.commit("load");
-            },
-            clear() {
-                this.input.email = "";
-                this.input.senha = "";
+            getMeta(){
+                 http.request({
+                    url: this.url,
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" }
+                    }).then(response => {
+                    var result = response.content.toJSON();
+                    this.alert(result.message+"!")
+                    if (response.statusCode == 200){
+                        //antes de ir para tela home salvar os dados do usuário para poder utilizar nas outras páginas quando necessário
+                        this.input.minha_meta = result.dados
+                        //salvar o usuário no localStorage da aplicação
+                    }
+
+                    }, error => {
+                        console.error(error);
+                        this.alert("Erro com a conexão ao servidor. Tente novamente mais tarde!")
+                    });
             },
             onDrawerButtonTap() {
                 utils.showDrawer();
@@ -117,11 +129,14 @@
                     }).then(response => {
                     
                     var result = response.content.toJSON();
-                    this.alert(result.message)
+                    this.alert(result.message+"!")
                     if (response.statusCode == 200){
                         //antes de ir para tela home salvar os dados do usuário para poder utilizar nas outras páginas quando necessário
-                        save(); //salvar na store
-                        this.$navigateTo(Home);
+                        this.input = result.dados
+                        this.input.minha_meta = getMeta()
+                        //salvar o usuário no localStorage da aplicação
+                        localStorage.setItem("usuario",JSON.stringify(this.input))
+                        this.$navigateTo(Home)
                     }
 
                     }, error => {
