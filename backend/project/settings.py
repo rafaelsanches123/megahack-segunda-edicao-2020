@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'project.checking',
     'project.cadastro',
     'project.meta',
+    'project.gastos',
     'project.dica',
     'rest_framework',
     'drf_yasg',
