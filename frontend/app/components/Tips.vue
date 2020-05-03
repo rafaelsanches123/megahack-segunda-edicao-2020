@@ -68,9 +68,6 @@
             SelectedPageService.getInstance().updateSelectedPage("Tips");
         },
         computed: {
-            meta(){
-                return this.meta
-            }
         },
         methods: {
             onDrawerButtonTap() {

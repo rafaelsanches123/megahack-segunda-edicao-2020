@@ -22,7 +22,6 @@ new Vue({
         return h(App, [
           h(DrawerContent, { slot: "drawerContent" }),
           h(InitialPage, { slot: "mainContent" }),
-          //h(Login, { slot: 'mainContent' })
         ]);
       }
   }).$start();
