@@ -24,8 +24,8 @@
             <StackLayout class="">
                 <Image class="logo" src="~/images/ranking.png" width="100" height="100" stretch="aspectFill" />
                 <Label class="header" text="MINHA META!" />
-                <Label class="sub-header" :text="meta" />
-                <Label class="time-meta" :text="tempo_meta" />
+                <Label class="sub-header" :text="meta.descricao" />
+                <Label class="time-meta" :text="usuario.email" />
             </StackLayout>
 
              <StackLayout orientation="horizontal" class="resultado-diario">
@@ -37,7 +37,7 @@
                         <Label>
                             <FormattedString>
                                 <Span text="R$ " />
-                                <Span :text="formatPrice(input.gasto)" />
+                                <Span :text="formatPrice(usuario.gasto)" />
                             </FormattedString>
                         </Label>
                     </StackLayout>
@@ -50,7 +50,7 @@
                         <Label>
                             <FormattedString>
                                 <Span text="R$ " />
-                                <Span :text="formatPrice(input.renda)" />
+                                <Span :text="formatPrice(usuario.renda)" />
                             </FormattedString>
                         </Label>
                     </StackLayout>
@@ -94,28 +94,15 @@
 <script>
     import * as utils from "~/shared/utils";
     import SelectedPageService from "../shared/selected-page-service";
+    import * as http from "http";
     import * as ApplicationSettings from "application-settings";
-    import localStorage from 'nativescript-localstorage';
 
     export default {
         data() {
             return {
-                input: {
-                    email: "",
-                    senha: "",
-                    nome: "",
-                    apelido: "",
-                    gasto: "",
-                    renda: "",
-                    celular: "",
-                    minha_meta: ""
-                },
-                meta:"Comprar um carro modelo HB20 ano 2008",
-                valor_meta:40000.00,
                 inicio_meta: 'Quando comecei a meta: 01/05/2020',
                 fim_meta: 'Quando terminará a meta: 25/08/2020',
                 tempo_meta: 'Dias para finalizar a sua meta: 45 dias!',
-                data_atual:"04/05/2020",
                 gasto_mensal : [
                         {
                             nome:"Rancho da Picanha",
@@ -174,16 +161,27 @@
                     ]
             }
         },
-        beforeMount(){
-            this.input = JSON.parse(localStorage.getItem("usuario"))
+        created(){
+            //criar o objeto meta com seus respectivos valores
+            this.$store.dispatch("getMeta", {url:"http://10.0.2.2:8000/meta/?email=", email:this.usuario.email})
+        },
+        mounted(){
         },
         updated() {
             SelectedPageService.getInstance().updateSelectedPage("Home")
-            this.input = JSON.parse(localStorage.getItem("usuario"))
         },
         computed: {
+            usuario(){
+                return this.$store.state.usuario
+            },
+            meta(){
+                return this.$store.state.meta
+            }
         },
         methods: {
+            retorna_tempo_testante_meta(){
+                datediff("day", this.input.minha_meta.data_inicial, this.input.minha_meta.data_final)
+            },
             onDrawerButtonTap() {
                 utils.showDrawer();
             },
