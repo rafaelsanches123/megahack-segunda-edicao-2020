@@ -24,10 +24,10 @@ class MetaView(generics.ListCreateAPIView):
             # pesquisa pela meta do usuário
             query = MetaModel.objects.filter(email=_json['email'])
             if query:
+                resp = None
                 for p in MetaModel.objects.all():
-                    if p.email == _json['email']:
-                        return Response(
-                            {
+                    if p.email == _json['email'] and p.descricao != '':
+                            resp = {
                                 'message': 'Dados de meta encontrados.',
                                 'dados': {   
                                     'descricao': p.descricao, 
@@ -35,8 +35,15 @@ class MetaView(generics.ListCreateAPIView):
                                     'data_inicial': p.data_inicial,
                                     'data_final': p.data_final
                                 }
-                            }, status=200)
-            return Response({'message': 'Meta não registrada.'}, status=401)
+                            }
+                if resp:
+                    return Response({
+                        'message': 'Meta recuperada com sucesso!', 
+                        'dados': resp
+                        }, 
+                        status=200
+                    )
+                return Response({'message': 'Meta não registrada.'}, status=401)
         else:
             return Response({'message': 'Email não informado.'}, status=400)
 
@@ -58,19 +65,11 @@ class MetaView(generics.ListCreateAPIView):
             return Response({'message': 'data_final não informada.'}, status=400)
 
         data = MetaModel.objects.filter(email=_json['email'])
-        if not data:
+        if data:
             MetaModel.objects.filter(email=_json['email']).update(descricao=_json['descricao'])
             MetaModel.objects.filter(email=_json['email']).update(valor=_json['valor'])
             MetaModel.objects.filter(email=_json['email']).update(data_inicial=_json['data_inicial'])
             MetaModel.objects.filter(email=_json['email']).update(data_final=_json['data_final'])
-            # registra meta
-            # register = MetaModel(
-            #     descricao=_json['descricao'],
-            #     valor=_json['valor'],
-            #     data_inicial=_json['data_inicial'],
-            #     data_final=_json['data_final']
-            # )
-            # register.save()
             return Response({'message': 'Meta registrada com sucesso!'}, status=200)
         else:
             return Response({'message': 'Erro: Meta já cadastrada.'}, status=400)
