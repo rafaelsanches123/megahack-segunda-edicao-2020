@@ -13,9 +13,24 @@
                         <Label col="1" text="Home" class="p-r-10"></Label>
                     </GridLayout>
 
+                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Checking' ? ' -selected': '')" @tap="onNavigationItemTap(Checking)">
+                        <Label col="0" text.decode="&#xf015;" class="nt-icon fas"></Label>
+                        <Label col="1" text="Checking" class="p-r-10"></Label>
+                    </GridLayout>
+
                     <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Ranking' ? ' -selected': '')" @tap="onNavigationItemTap(Ranking)">
                         <Label col="0" text.decode="&#xf015;" class="nt-icon fas"></Label>
-                        <Label col="1" text="Ranking" class="p-r-10"></Label>
+                        <Label col="1" text="Recomendação do Dia" class="p-r-10"></Label>
+                    </GridLayout>
+
+                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Meta' ? ' -selected': '')" @tap="onNavigationItemTap(Meta)">
+                        <Label col="0" text.decode="&#xf015;" class="nt-icon fas"></Label>
+                        <Label col="1" text="Meta" class="p-r-10"></Label>
+                    </GridLayout>
+
+                    <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Tips' ? ' -selected': '')" @tap="onNavigationItemTap(Tips)">
+                        <Label col="0" text.decode="&#xf015;" class="nt-icon fas"></Label>
+                        <Label col="1" text="Dica do Dia" class="p-r-10"></Label>
                     </GridLayout>
 
         
@@ -34,6 +49,9 @@
     import Login from "./Login";
     import Home from "./Home";
     import Ranking from "./Ranking";
+    import Meta from "./Meta";
+    import Tips from "./Tips";
+    import Checking from "./Checking";
     import Settings from "./Settings";
     import * as utils from "~/shared/utils";
     import SelectedPageService from "~/shared/selected-page-service";    
@@ -48,7 +66,10 @@
                 Login: Login,
                 Home: Home,
                 Ranking: Ranking,
+                Tips: Tips,
+                Checking: Checking,
                 Settings: Settings,
+                Meta: Meta,
                 selectedPage: ""
             };
         },
@@ -56,6 +77,9 @@
             Login,
             Home,
             Ranking,
+            Meta,
+            Tips,
+            Checking,
             Settings
         },
         methods: {
