@@ -38,7 +38,7 @@
 
             <StackLayout class="">
             <Label class="inputs-text-date" text="E QUANDO TERMINA ESSA META?"></Label>
-            <DatePicker v-model="textFieldInitialDate" :date="textFieldInitialDate" />
+            <DatePicker v-model="textFieldFinalDate" :date="textFieldFinalDate" />
             </StackLayout>
 
             <StackLayout class="">
@@ -58,6 +58,8 @@
 <script>
     import * as utils from "~/shared/utils";
     import SelectedPageService from "../shared/selected-page-service";
+    import * as http from "http";
+    import Home from "./Home";
 
     export default {
         data() {
@@ -72,7 +74,9 @@
             SelectedPageService.getInstance().updateSelectedPage("Meta");
         },
         computed: {
-            
+            usuario(){
+                return this.$store.state.usuario
+            }
         },
         methods: {
             onDrawerButtonTap() {
@@ -83,28 +87,32 @@
                 return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
             },
             validateMeta() {
-                if (this.textFieldDescryption == "" || this.textFieldValue == "") {
+                if (this.textFieldDescription == "" || this.textFieldValue == "") {
                     this.alert(
                         "Por favor, todos os dados são obrigatórios o seu preenchimento!"
                     )
                 }
                 else {
+                    this.textFieldInitialDate = this.textFieldInitialDate.getDate()+'/'+this.textFieldInitialDate.getMonth()+'/'+this.textFieldInitialDate.getFullYear()
+                    this.textFieldFinalDate = this.textFieldFinalDate.getDate()+'/'+this.textFieldFinalDate.getMonth()+'/'+this.textFieldFinalDate.getFullYear()
                     http.request({
                     url: "http://10.0.2.2:8000/meta/",
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     content: JSON.stringify({
-                        'descricao'     :    this.textFieldDescryption,
-                        'valor'  :    this.textFieldValue,
-                        'inicio'    :    this.textFieldInitialDate,
-                        'fim'    :    this.textFieldFinalDate,
+                        'email'         : this.usuario.email,
+                        'descricao'     : this.textFieldDescription,
+                        'valor'         : this.textFieldValue,
+                        'data_inicial'  : this.textFieldInitialDate,
+                        'data_final'    : this.textFieldFinalDate,
                     })
                     }).then(response => {
                     
                     var result = response.content.toJSON();
                     this.alert(result.message)
                     if (response.statusCode == 200){
-                        this.$navigateTo(Login);
+                        this.$store.commit("saveMeta", result.dados);
+                        this.$navigateTo(Home);
                     }
 
                     }, error => {

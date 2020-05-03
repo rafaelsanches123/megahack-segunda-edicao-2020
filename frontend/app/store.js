@@ -26,19 +26,19 @@ const store = new Vuex.Store({
       }
     },*/
     saveUsuario(state, data) {
-      console.log(data);
+      //console.log(data);
       state.usuario = data;
     },
     saveMeta(state, data) {
-      console.log(data);
+      //console.log(data);
       state.meta = data;
     },
     saveGastosMensal(state, data) {
-      console.log(data);
+      //console.log(data);
       state.gastos_mensal = data;
     },
     saveRanking(state, data) {
-      console.log(data);
+      //console.log(data);
       state.ranking = data;
     },
   },
@@ -112,7 +112,4 @@ const store = new Vuex.Store({
   },
 });
 
-//Vue.prototype.$store = store;
-
-//module.exports = store;
 export default store;
