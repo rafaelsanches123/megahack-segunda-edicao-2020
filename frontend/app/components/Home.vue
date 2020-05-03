@@ -22,7 +22,7 @@
         <StackLayout class="page__content">
             
             <StackLayout class="">
-                <Image class="logo" src="~/images/meta.png" stretch="none" />
+                <Image class="logo" src="~/images/ranking.png" width="100" height="100" stretch="aspectFill" />
                 <Label class="header" text="MINHA META!" />
                 <Label class="sub-header" :text="meta" />
                 <Label class="time-meta" :text="tempo_meta" />
@@ -34,7 +34,12 @@
                         <Label text="GASTANDO" />
                     </StackLayout>
                     <StackLayout width="40%" class="">
-                        <Label text="R$ 400.00" />
+                        <Label>
+                            <FormattedString>
+                                <Span text="R$ " />
+                                <Span :text="formatPrice(400.00)" />
+                            </FormattedString>
+                        </Label>
                     </StackLayout>
                 </StackLayout>
                 <StackLayout class="economizando">
@@ -42,7 +47,12 @@
                         <Label text="ECONOMIZANDO" />
                     </StackLayout>
                     <StackLayout width="60%" class="">
-                        <Label text="R$ 600.00" />
+                        <Label>
+                            <FormattedString>
+                                <Span text="R$ " />
+                                <Span :text="formatPrice(600.00)" />
+                            </FormattedString>
+                        </Label>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
@@ -50,7 +60,6 @@
 
             <StackLayout class="">
                 <Label class="extrato" text="EXTRATO MENSAL DE CONSUMO" />
-                <Label class="extrato-data" :text="data_atual" />
             </StackLayout>
 
             <ListView class="list-view" for="item in gasto_mensal">
@@ -60,10 +69,18 @@
                         <Label textWrap="true" :text="item.nome" />
                     </StackLayout>
                     <StackLayout row="0" col="1" class="valor-produto-parceiro">
-                        <Label :text="item.valor" />
+                        <Label>
+                            <FormattedString>
+                                <Span text="R$ -" />
+                                <Span :text="formatPrice(item.valor)" />
+                            </FormattedString>
+                        </Label>
                     </StackLayout>
                     <StackLayout row="1" col="0" class="">
                         <Label :text="item.tipo" />
+                    </StackLayout>
+                    <StackLayout row="1" col="1" class="">
+                        <Label :text="item.data" />
                     </StackLayout>
                 </GridLayout>
             </v-template>
@@ -81,7 +98,7 @@
     export default {
         data() {
             return {
-                meta:"Minha meta: comprar um carro HB20",
+                meta:"Comprar um carro modelo HB20 ano 2008",
                 valor_meta:40000.00,
                 inicio_meta: 'Quando comecei a meta: 01/05/2020',
                 fim_meta: 'Quando terminará a meta: 25/08/2020',
@@ -93,55 +110,55 @@
                         {
                             nome:"Rancho da Picanha",
                             data:"01/05/2020",
-                            valor:-50.00,
+                            valor:50.00,
                             tipo:"Restaurante",
                         },
                         {
                             nome:"Cachaçaria Água Doce",
                             data:"02/05/2020",
-                            valor:-25.75,
+                            valor:25.75,
                             tipo:"Restaurante"
                         },
                         {
                             nome:"Burguer King",
                             data:"03/05/2020",
-                            valor:-55.10,
+                            valor:55.10,
                             tipo:"Fastfood"
                         },
                         {
                             nome:"MacDonald",
                             data:"01/05/2020",
-                            valor:-52.00,
+                            valor:52.00,
                             tipo:"Fastfood"
                         },
                         {
                             nome:"Pagani Pizzas e Esfirras",
                             data:"02/05/2020",
-                            valor:-14.75,
+                            valor:14.75,
                             tipo:"Pizzaria"
                         },
                         {
                             nome:"Lanchonete do Juca",
                             data:"03/05/2020",
-                            valor:-12.10,
+                            valor:12.10,
                             tipo:"Lanchonete"
                         },
                         {
                             nome:"Donatello Pizzaria",
                             data:"01/05/2020",
-                            valor:-32.00,
+                            valor:32.00,
                             tipo:"Pizzaria"
                         },
                         {
                             nome:"Sorveteria Parra",
                             data:"02/05/2020",
-                            valor:-19.75,
+                            valor:19.75,
                             tipo:"Sorveteria"
                         },
                         {
                             nome:"Self Service Trevo",
                             data:"03/05/2020",
-                            valor:-45.10,
+                            valor:45.10,
                             tipo:"Restaurante"
                         }
                     ]
@@ -158,6 +175,10 @@
         methods: {
             onDrawerButtonTap() {
                 utils.showDrawer();
+            },
+            formatPrice(value) {
+                let val = (value/1).toFixed(2).replace('.', ',')
+                return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
             }
         }
     };
