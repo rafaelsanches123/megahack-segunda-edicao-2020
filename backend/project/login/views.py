@@ -46,7 +46,7 @@ class LoginView(generics.ListCreateAPIView):
                         'celular': p.celular
                     }
             if match:
-                return Response({'message': resp}, status=200)
+                return Response({'message': 'Login realizado com sucesso', 'dados': resp}, status=200)
             else:
                 return Response({'message': 'Erro: Senha incorreta.'}, status=400)
         else:

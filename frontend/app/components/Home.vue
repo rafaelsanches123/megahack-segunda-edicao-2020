@@ -37,7 +37,7 @@
                         <Label>
                             <FormattedString>
                                 <Span text="R$ " />
-                                <Span :text="formatPrice(400.00)" />
+                                <Span :text="formatPrice(input.gasto)" />
                             </FormattedString>
                         </Label>
                     </StackLayout>
@@ -50,7 +50,7 @@
                         <Label>
                             <FormattedString>
                                 <Span text="R$ " />
-                                <Span :text="formatPrice(600.00)" />
+                                <Span :text="formatPrice(input.renda)" />
                             </FormattedString>
                         </Label>
                     </StackLayout>
@@ -94,17 +94,27 @@
 <script>
     import * as utils from "~/shared/utils";
     import SelectedPageService from "../shared/selected-page-service";
+    import * as ApplicationSettings from "application-settings";
+    import localStorage from 'nativescript-localstorage';
 
     export default {
         data() {
             return {
+                input: {
+                    email: "",
+                    senha: "",
+                    nome: "",
+                    apelido: "",
+                    gasto: "",
+                    renda: "",
+                    celular: "",
+                    minha_meta: ""
+                },
                 meta:"Comprar um carro modelo HB20 ano 2008",
                 valor_meta:40000.00,
                 inicio_meta: 'Quando comecei a meta: 01/05/2020',
                 fim_meta: 'Quando terminará a meta: 25/08/2020',
                 tempo_meta: 'Dias para finalizar a sua meta: 45 dias!',
-                gasto:"1000",
-                renda:"4000",
                 data_atual:"04/05/2020",
                 gasto_mensal : [
                         {
@@ -164,13 +174,14 @@
                     ]
             }
         },
-        mounted() {
-            SelectedPageService.getInstance().updateSelectedPage("Home");
+        beforeMount(){
+            this.input = JSON.parse(localStorage.getItem("usuario"))
+        },
+        updated() {
+            SelectedPageService.getInstance().updateSelectedPage("Home")
+            this.input = JSON.parse(localStorage.getItem("usuario"))
         },
         computed: {
-            meta(){
-                return this.meta
-            }
         },
         methods: {
             onDrawerButtonTap() {
@@ -179,6 +190,13 @@
             formatPrice(value) {
                 let val = (value/1).toFixed(2).replace('.', ',')
                 return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+            },
+            alert(message) {
+                return alert({
+                    title: "ATENÇÃO!",
+                    okButtonText: "OK",
+                    message: message
+                });
             }
         }
     };

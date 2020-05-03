@@ -27,11 +27,14 @@ class MetaView(generics.ListCreateAPIView):
                 for p in MetaModel.objects.all():
                     if p.email == _json['email']:
                         return Response(
-                            {   
-                                'descricao': p.descricao, 
-                                'valor': p.valor,
-                                'data_inicial': p.data_inicial,
-                                'data_final': p.data_final
+                            {
+                                'message': 'Dados de meta encontrados.',
+                                'dados': {   
+                                    'descricao': p.descricao, 
+                                    'valor': p.valor,
+                                    'data_inicial': p.data_inicial,
+                                    'data_final': p.data_final
+                                }
                             }, status=200)
             return Response({'message': 'Meta não registrada.'}, status=401)
         else:
