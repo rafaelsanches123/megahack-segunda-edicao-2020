@@ -30,18 +30,18 @@
             <v-template>
                 <GridLayout columns="2*, *" rows="*, *" class="lista-item"> 
                     <StackLayout row="0" col="0" class="titulo-parceiro">
-                        <Label :text="item.nome" />
+                        <Label :text="item.nome_restaurante" />
                     </StackLayout>
                     <StackLayout row="0" col="1">
                         <Label>
                             <FormattedString>
                                 <Span  text="R$ " fontWeight="bold" />
-                                <Span :text="formatPrice(item.valor)" fontWeight="bold" />
+                                <Span :text="formatPrice(item.valor_prato)" fontWeight="bold" />
                             </FormattedString>
                         </Label>
                     </StackLayout>
                     <StackLayout class="" orientation="horizontal" row="1" col="0">
-                        <StarRating emptyBorderColor="black" emptyColor="white" filledBorderColor="black" filledColor="yellow" :value="item.numero_estrelas_prato" max="5"/>
+                        <StarRating emptyBorderColor="black" emptyColor="white" filledBorderColor="black" filledColor="yellow" :value="item.classificacao" max="5"/>
                     </StackLayout>
                 </GridLayout>
             </v-template>
