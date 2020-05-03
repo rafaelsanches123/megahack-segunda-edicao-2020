@@ -25,7 +25,7 @@ class DicaView(generics.ListCreateAPIView):
                 {   
                     'descricao': p.descricao
                 })
-        return Response({'message': dicas}, status=401)
+        return Response({'message': 'Dicas recuperadas com sucesso', 'dados': dicas}, status=401)
 
     def post(self, request):
         _json = request.data

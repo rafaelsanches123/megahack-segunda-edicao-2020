@@ -7,10 +7,10 @@ from random import randint, random
 def combine_names(apps, schema_editor):
     MetaModel = apps.get_model("meta", "MetaModel")
     emails = ['joelsonn.santos@gmail.com', 'rafael.sanches@gmail.com', 'professorarenata@gmail.com']
-    valores = [300.00, 500.00, 450.00]
+    valores = [35000.00, 22000.00, 180000.00]
     datas_iniciais = ['04/05/2020', '04/05/2020', '04/05/2020']
     datas_finais = ['05/05/2021', '04/05/2021', '04/05/2021']
-    descricao = ['Comprar BMW 328i', 'Comprar um Kamikasi', 'Comprar uma Mercedez']
+    descricao = ['Comprar BMW 328i 2003', 'Comprar um Uno 96', 'Comprar um Apartamento']
 
     for i in range(0, len(emails)):
         register = MetaModel(
