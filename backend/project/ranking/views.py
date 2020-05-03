@@ -20,10 +20,10 @@ class RankingView(generics.ListCreateAPIView):
             resp.append({   
                 'nome_restaurante': p.nome_restaurante, 
                 'valor_prato': p.valor_prato,
-                'numero_estrelas_prato': p.numero_estrelas_prato,
-                'numero_estrelas_valor': p.numero_estrelas_valor
+                'classificacao': p.numero_estrelas_prato
+                # 'numero_estrelas_valor': p.numero_estrelas_valor
             })
-        return Response({'message': resp}, status=200)
+        return Response({'message': 'Ranking acessado com sucesso!', 'dados': resp}, status=200)
 
     def post(self, request):
         _json = request.data

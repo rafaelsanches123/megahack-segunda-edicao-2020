@@ -26,7 +26,7 @@
                 <Label class="sub-header" textWrap="true" text="Coma por um preço justo, com boa qualidade e por indicação de outros salvadores!" />
             </StackLayout>
 
-            <ListView class="list-view" for="item in lista_ranking">
+            <ListView height="100%" class="list-view" for="item in lista_ranking">
             <v-template>
                 <GridLayout columns="2*, *" rows="*, *" class="lista-item"> 
                     <StackLayout row="0" col="0" class="titulo-parceiro">
@@ -59,78 +59,19 @@
     export default {
         data() {
             return {
-                lista_ranking : [
-                    {
-                            nome:"Rancho da Picanha",
-                            valor:50.00,
-                            tipo:"Restaurante",
-                            numero_estrelas_prato: 5,
-                            numero_estrelas_valor: 5
-                    },
-                    {
-                        nome:"Cachaçaria Água Doce",
-                        valor:25.75,
-                        tipo:"Restaurante",
-                        numero_estrelas_prato: 4,
-                        numero_estrelas_valor: 5
-                    },
-                    {
-                        nome:"Burguer King",
-                        valor:55.10,
-                        tipo:"Fastfood",
-                        numero_estrelas_prato: 4,
-                        numero_estrelas_valor: 4
-                    },
-                    {
-                        nome:"MacDonald",
-                        valor:52.00,
-                        tipo:"Fastfood",
-                        numero_estrelas_prato: 4,
-                        numero_estrelas_valor: 3
-                    },
-                    {
-                        nome:"Pagani Pizzas e Esfirras",
-                        valor:14.75,
-                        tipo:"Pizzaria",
-                        numero_estrelas_prato: 4,
-                        numero_estrelas_valor: 2
-                    },
-                    {
-                        nome:"Lanchonete do Juca",
-                        valor:12.10,
-                        tipo:"Lanchonete",
-                        numero_estrelas_prato: 4,
-                        numero_estrelas_valor: 1
-                    },
-                    {
-                        nome:"Donatello Pizzaria",
-                        valor:32.00,
-                        tipo:"Pizzaria",
-                        numero_estrelas_prato: 3,
-                        numero_estrelas_valor: 5
-                    },
-                    {
-                        nome:"Sorveteria Parra",
-                        valor:19.75,
-                        tipo:"Sorveteria",
-                        numero_estrelas_prato: 3,
-                        numero_estrelas_valor: 4
-                    },
-                    {
-                        nome:"Self Service Trevo",
-                        valor:45.10,
-                        tipo:"Restaurante",
-                        numero_estrelas_prato: 2,
-                        numero_estrelas_valor: 3
-                    }
-                ]
             }
+        },
+        created(){
+            //criar o objeto meta com seus respectivos valores
+            this.$store.dispatch("getRanking", {url:"http://10.0.2.2:8000/ranking/"})
         },
         mounted() {
             SelectedPageService.getInstance().updateSelectedPage("Ranking");
         },
         computed: {
-            
+            lista_ranking(){
+                return this.$store.state.ranking
+            }
         },
         methods: {
             onDrawerButtonTap() {

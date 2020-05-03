@@ -60,53 +60,23 @@
     import Home from "./Home";
     import * as http from "http";
     import * as ApplicationSettings from "application-settings";
-    import localStorage from 'nativescript-localstorage';
 
     export default {
         data() {
             return {
                 textFieldLogin    : "rafael.sanches@gmail.com",
                 textFieldPassword : "123",
-                input: {
-                    email: "",
-                    senha: "",
-                    nome: "",
-                    apelido: "",
-                    gasto: "",
-                    renda: "",
-                    celular: "",
-                    minha_meta: ""
-                },
-                url = "http://10.0.2.2:8000/meta/?email="+input.email+""
-
+                usuario: {}
             }
         },
         mounted() {
             SelectedPageService.getInstance().updateSelectedPage("Login");
+            
         },
         computed: {
 
         },
         methods: {
-            getMeta(){
-                 http.request({
-                    url: this.url,
-                    method: "GET",
-                    headers: { "Content-Type": "application/json" }
-                    }).then(response => {
-                    var result = response.content.toJSON();
-                    this.alert(result.message+"!")
-                    if (response.statusCode == 200){
-                        //antes de ir para tela home salvar os dados do usuário para poder utilizar nas outras páginas quando necessário
-                        this.input.minha_meta = result.dados
-                        //salvar o usuário no localStorage da aplicação
-                    }
-
-                    }, error => {
-                        console.error(error);
-                        this.alert("Erro com a conexão ao servidor. Tente novamente mais tarde!")
-                    });
-            },
             onDrawerButtonTap() {
                 utils.showDrawer();
             },
@@ -132,10 +102,7 @@
                     this.alert(result.message+"!")
                     if (response.statusCode == 200){
                         //antes de ir para tela home salvar os dados do usuário para poder utilizar nas outras páginas quando necessário
-                        this.input = result.dados
-                        this.input.minha_meta = getMeta()
-                        //salvar o usuário no localStorage da aplicação
-                        localStorage.setItem("usuario",JSON.stringify(this.input))
+                        this.$store.commit("saveUsuario", result.dados);
                         this.$navigateTo(Home)
                     }
 
