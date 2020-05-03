@@ -37,12 +37,7 @@ class MetaView(generics.ListCreateAPIView):
                                 }
                             }
                 if resp:
-                    return Response({
-                        'message': 'Meta recuperada com sucesso!', 
-                        'dados': resp
-                        }, 
-                        status=200
-                    )
+                    return Response(resp, status=200)
                 return Response({'message': 'Meta não registrada.'}, status=401)
         else:
             return Response({'message': 'Email não informado.'}, status=400)
