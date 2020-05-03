@@ -13,7 +13,7 @@ Vue.registerElement(
   () => require("nativescript-barcodescanner").BarcodeScannerView
 );
 
-import InitialPage from "./components/Checking";
+import InitialPage from "./components/Login";
 
 Vue.config.silent = (TNS_ENV === 'production');
 

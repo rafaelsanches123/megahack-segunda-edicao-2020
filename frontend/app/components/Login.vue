@@ -59,21 +59,42 @@
     import CustomerRegistration from "./CustomerRegistration";
     import Home from "./Home";
     import * as http from "http";
+    import * as ApplicationSettings from "application-settings";
+
 
     export default {
         data() {
             return {
                 textFieldLogin    : "",
-                textFieldPassword : ""
+                textFieldPassword : "",
+                input: {
+                    email: "",
+                    senha: ""
+                }
             }
         },
         mounted() {
             SelectedPageService.getInstance().updateSelectedPage("Login");
+            this.$store.subscribe((mutations, state) => {
+                ApplicationSettings.setString("store", JSON.stringify(state));
+                this.input.email = state.cliente.email;
+                this.input.senha = state.cliente.senha;
+            });
         },
         computed: {
 
         },
         methods: {
+            save() {
+                this.$store.commit("save", this.input);
+            },
+            load() {
+                this.$store.commit("load");
+            },
+            clear() {
+                this.input.email = "";
+                this.input.senha = "";
+            },
             onDrawerButtonTap() {
                 utils.showDrawer();
             },
@@ -98,6 +119,8 @@
                     var result = response.content.toJSON();
                     this.alert(result.message)
                     if (response.statusCode == 200){
+                        //antes de ir para tela home salvar os dados do usuário para poder utilizar nas outras páginas quando necessário
+                        save(); //salvar na store
                         this.$navigateTo(Home);
                     }
 

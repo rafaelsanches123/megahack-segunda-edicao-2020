@@ -98,6 +98,10 @@
     export default {
         data() {
             return {
+                input: {
+                    email: "",
+                    senha: ""
+                },
                 meta:"Comprar um carro modelo HB20 ano 2008",
                 valor_meta:40000.00,
                 inicio_meta: 'Quando comecei a meta: 01/05/2020',
@@ -166,6 +170,10 @@
         },
         mounted() {
             SelectedPageService.getInstance().updateSelectedPage("Home");
+            this.input = load()
+            if(this.input.email != ""){
+                alert(this.input.email)
+            }
         },
         computed: {
             meta(){
@@ -173,12 +181,22 @@
             }
         },
         methods: {
+            load() {
+                this.$store.commit("load");
+            },
             onDrawerButtonTap() {
                 utils.showDrawer();
             },
             formatPrice(value) {
                 let val = (value/1).toFixed(2).replace('.', ',')
                 return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+            },
+            alert(message) {
+                return alert({
+                    title: "ATENÇÃO!",
+                    okButtonText: "OK",
+                    message: message
+                });
             }
         }
     };
