@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'project.login',
     'project.ranking',
+    'project.checking',
     'project.cadastro',
     'project.meta',
     'project.dica',

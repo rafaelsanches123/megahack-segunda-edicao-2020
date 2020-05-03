@@ -15,6 +15,7 @@ from project.cadastro.views import CadastroView
 from project.ranking.views import RankingView
 from project.meta.views import MetaView
 from project.dica.views import DicaView
+from project.checking.views import CheckingView
 
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -54,4 +55,5 @@ urlpatterns = [
     path('ranking/', RankingView.as_view()),
     path('meta/', MetaView.as_view()),
     path('dica/', DicaView.as_view()),
+    path('checking/', CheckingView.as_view()),
 ]
