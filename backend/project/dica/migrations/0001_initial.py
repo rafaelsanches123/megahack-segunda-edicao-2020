@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='DicaModel',
             fields=[
-                ('descricao', models.TextField()),
+                ('descricao', models.CharField(max_length=200, primary_key=True)),
             ],
             options={
                 'db_table': 'dica',

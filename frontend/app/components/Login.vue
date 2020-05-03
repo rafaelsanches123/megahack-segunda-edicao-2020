@@ -59,16 +59,19 @@
     import CustomerRegistration from "./CustomerRegistration";
     import Home from "./Home";
     import * as http from "http";
+    import * as ApplicationSettings from "application-settings";
 
     export default {
         data() {
             return {
-                textFieldLogin    : "",
-                textFieldPassword : ""
+                textFieldLogin    : "rafael.sanches@gmail.com",
+                textFieldPassword : "123",
+                usuario: {}
             }
         },
         mounted() {
             SelectedPageService.getInstance().updateSelectedPage("Login");
+            
         },
         computed: {
 
@@ -96,9 +99,11 @@
                     }).then(response => {
                     
                     var result = response.content.toJSON();
-                    this.alert(result.message)
+                    this.alert(result.message+"!")
                     if (response.statusCode == 200){
-                        this.$navigateTo(Home);
+                        //antes de ir para tela home salvar os dados do usuário para poder utilizar nas outras páginas quando necessário
+                        this.$store.commit("saveUsuario", result.dados);
+                        this.$navigateTo(Home)
                     }
 
                     }, error => {

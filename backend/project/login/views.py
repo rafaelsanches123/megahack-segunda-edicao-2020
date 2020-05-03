@@ -32,11 +32,21 @@ class LoginView(generics.ListCreateAPIView):
         # faz login
         if data:
             match = False
+            resp = {}
             for p in CadastroModel.objects.all():
                 if p.senha == _json['senha'] and _json['email'] == p.email:
                     match = True
+                    resp = {
+                        'nome': p.nome,
+                        'senha': p.senha,
+                        'apelido': p.apelido,
+                        'gasto': p.gasto,
+                        'renda': p.renda,
+                        'email': p.email,
+                        'celular': p.celular
+                    }
             if match:
-                return Response({'message': 'Login realizado com sucesso!'}, status=200)
+                return Response({'message': 'Login realizado com sucesso', 'dados': resp}, status=200)
             else:
                 return Response({'message': 'Erro: Senha incorreta.'}, status=400)
         else:

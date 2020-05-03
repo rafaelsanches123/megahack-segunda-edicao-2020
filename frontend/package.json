@@ -14,11 +14,13 @@
   "dependencies": {
     "@nativescript/theme": "~2.3.3",
     "nativescript-barcodescanner": "^3.4.2",
+    "nativescript-localstorage": "^2.0.1",
     "nativescript-star-ratings": "^1.0.0",
     "nativescript-ui-sidedrawer": "~8.0.0",
     "nativescript-vue": "~2.5.0",
     "rxjs": "^6.4.0",
-    "tns-core-modules": "~6.5.0"
+    "tns-core-modules": "~6.5.0",
+    "vuex": "^3.3.0"
   },
   "devDependencies": {
     "@babel/core": "~7.1.0",
