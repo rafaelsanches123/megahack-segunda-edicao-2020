@@ -25,7 +25,13 @@
                 <Image class="logo" src="~/images/ranking.png" width="100" height="100" stretch="aspectFill" />
                 <Label class="header" text="MINHA META!" />
                 <Label class="sub-header" :text="meta.descricao" />
-                <Label class="time-meta" :text="usuario.email" />
+                <Label class="time-meta">
+                            <FormattedString>
+                                <Span text="Dias para finalizar a sua meta: " />
+                                <Span :text="retorna_tempo_testante_meta()" />
+                                <Span text=" dias!" />
+                            </FormattedString>
+                        </Label>
             </StackLayout>
 
              <StackLayout orientation="horizontal" class="resultado-diario">
@@ -37,7 +43,7 @@
                         <Label>
                             <FormattedString>
                                 <Span text="R$ " />
-                                <Span :text="formatPrice(usuario.gasto)" />
+                                <Span :text="formatPrice(gastos_mensal_total())" />
                             </FormattedString>
                         </Label>
                     </StackLayout>
@@ -50,7 +56,7 @@
                         <Label>
                             <FormattedString>
                                 <Span text="R$ " />
-                                <Span :text="formatPrice(usuario.renda)" />
+                                <Span :text="formatPrice(usuario.gasto-gastos_mensal_total())" />
                             </FormattedString>
                         </Label>
                     </StackLayout>
@@ -62,7 +68,7 @@
                 <Label class="extrato" text="EXTRATO MENSAL DE CONSUMO" />
             </StackLayout>
 
-            <ListView class="list-view" for="item in gasto_mensal">
+            <ListView height="100%" class="list-view" for="item in gastos_mensal">
             <v-template>
                 <GridLayout columns="2*, *" rows="*, *" class="lista-item"> 
                     <StackLayout row="0" col="0" class="titulo-parceiro">
@@ -77,7 +83,7 @@
                         </Label>
                     </StackLayout>
                     <StackLayout row="1" col="0" class="">
-                        <Label :text="item.tipo" />
+                        <!--<Label :text="item.tipo" /> -->
                     </StackLayout>
                     <StackLayout row="1" col="1" class="">
                         <Label :text="item.data" />
@@ -100,72 +106,15 @@
     export default {
         data() {
             return {
-                inicio_meta: 'Quando comecei a meta: 01/05/2020',
-                fim_meta: 'Quando terminará a meta: 25/08/2020',
-                tempo_meta: 'Dias para finalizar a sua meta: 45 dias!',
-                gasto_mensal : [
-                        {
-                            nome:"Rancho da Picanha",
-                            data:"01/05/2020",
-                            valor:50.00,
-                            tipo:"Restaurante",
-                        },
-                        {
-                            nome:"Cachaçaria Água Doce",
-                            data:"02/05/2020",
-                            valor:25.75,
-                            tipo:"Restaurante"
-                        },
-                        {
-                            nome:"Burguer King",
-                            data:"03/05/2020",
-                            valor:55.10,
-                            tipo:"Fastfood"
-                        },
-                        {
-                            nome:"MacDonald",
-                            data:"01/05/2020",
-                            valor:52.00,
-                            tipo:"Fastfood"
-                        },
-                        {
-                            nome:"Pagani Pizzas e Esfirras",
-                            data:"02/05/2020",
-                            valor:14.75,
-                            tipo:"Pizzaria"
-                        },
-                        {
-                            nome:"Lanchonete do Juca",
-                            data:"03/05/2020",
-                            valor:12.10,
-                            tipo:"Lanchonete"
-                        },
-                        {
-                            nome:"Donatello Pizzaria",
-                            data:"01/05/2020",
-                            valor:32.00,
-                            tipo:"Pizzaria"
-                        },
-                        {
-                            nome:"Sorveteria Parra",
-                            data:"02/05/2020",
-                            valor:19.75,
-                            tipo:"Sorveteria"
-                        },
-                        {
-                            nome:"Self Service Trevo",
-                            data:"03/05/2020",
-                            valor:45.10,
-                            tipo:"Restaurante"
-                        }
-                    ]
             }
         },
         created(){
             //criar o objeto meta com seus respectivos valores
+            this.$store.dispatch("getGastosMensal", {url:"http://10.0.2.2:8000/gastos/"})
             this.$store.dispatch("getMeta", {url:"http://10.0.2.2:8000/meta/?email=", email:this.usuario.email})
         },
         mounted(){
+            
         },
         updated() {
             SelectedPageService.getInstance().updateSelectedPage("Home")
@@ -176,11 +125,25 @@
             },
             meta(){
                 return this.$store.state.meta
+            },
+            gastos_mensal(){
+                return this.$store.state.gastos_mensal
             }
+            
         },
         methods: {
+            gastos_mensal_total(){
+                var totalGastoMensal = 0
+                for(var i = 0; i < this.gastos_mensal.length;i++){
+                    totalGastoMensal += this.gastos_mensal[i].valor
+                }
+                return totalGastoMensal
+            },
             retorna_tempo_testante_meta(){
-                datediff("day", this.input.minha_meta.data_inicial, this.input.minha_meta.data_final)
+                var date1 = new Date(this.meta.data_inicial);
+                var date2 = new Date(this.meta.data_final);
+                var diffDays = parseInt((date2 - date1) / (1000 * 60 * 60 * 24), 10); 
+                return diffDays//this.tempo_meta
             },
             onDrawerButtonTap() {
                 utils.showDrawer();
@@ -228,7 +191,7 @@
         horizontal-align: center;
         font-size: 16;
         font-weight: 500;
-        margin-bottom: 5;
+        margin-bottom: 15;
         text-align: center;
     }
     .extrato{
