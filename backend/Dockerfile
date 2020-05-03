@@ -14,6 +14,7 @@ RUN apt-get install -y libsqlite3-dev wget python-pip build-essential pkg-config
 	pip install pandas && \
 	pip install -U drf-yasg && \
 	pip install psycopg2 && \
+	pip install qrcode[pil] && \
 	pip install Django && \
 	pip install argparse && \
 	pip install joblib && \
