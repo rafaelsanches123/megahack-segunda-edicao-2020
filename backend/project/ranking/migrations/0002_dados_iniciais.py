@@ -12,16 +12,14 @@ def combine_names(apps, schema_editor):
         'Rancho da Picanha', 
         'Niray'
     ]
-    numero_estrelas_valor = [randint(1, 5) for _ in range(0, len(nomes))]
     valor_prato = [float(randint(10, 50)) for _ in range(0, len(nomes))]
-    numero_estrelas_prato = [randint(1, 5) for _ in range(0, len(nomes))]
+    classificacao = [randint(1, 5) for _ in range(0, len(nomes))]
 
     for i in range(0, len(nomes)):
         register = RankingModel(
             nome_restaurante=nomes[i],
-            numero_estrelas_prato=numero_estrelas_prato[i],
-            valor_prato=valor_prato[i],
-            numero_estrelas_valor=numero_estrelas_valor[i]
+            classificacao=classificacao[i],
+            valor_prato=valor_prato[i]
         )
         register.save()
 

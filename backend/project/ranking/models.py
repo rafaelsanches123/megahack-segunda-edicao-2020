@@ -8,8 +8,7 @@ class RankingModel(models.Model):
     
     nome_restaurante = models.CharField(max_length=100)
     valor_prato = models.FloatField()
-    numero_estrelas_prato = models.IntegerField()
-    numero_estrelas_valor = models.IntegerField()
+    classificacao = models.IntegerField()
     
     def __str__(self):
         return self.nome_restaurante
