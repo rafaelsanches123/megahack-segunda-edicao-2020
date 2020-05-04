@@ -1,8 +1,8 @@
 # Mega Hackathon - Flourish
 
-### Prequisitos
-
-- Docker, docker-compose
+### Prequisitos de instalação
+- [Docker](https://docs.docker.com/get-docker/)
+- [docker-compose](https://docs.docker.com/compose/install/)
 
 ### Construir imagens
 
