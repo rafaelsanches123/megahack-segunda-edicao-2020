@@ -26,19 +26,19 @@ const store = new Vuex.Store({
       }
     },*/
     saveUsuario(state, data) {
-      //console.log(data);
+      //console.log("Usuario: " + JSON.stringify(data) );
       state.usuario = data;
     },
     saveMeta(state, data) {
-      //console.log(data);
+      //console.log("Meta: "+ JSON.stringify(data) );
       state.meta = data;
     },
     saveGastosMensal(state, data) {
-      //console.log(data);
+      //console.log("Gastos Mensal: " + JSON.stringify(data) );
       state.gastos_mensal = data;
     },
     saveRanking(state, data) {
-      //console.log(data);
+      //console.log("Ranking Parceiros: " + JSON.stringify(data) );
       state.ranking = data;
     },
   },

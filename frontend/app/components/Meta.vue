@@ -70,6 +70,8 @@
                 textFieldValue                : "",
             }
         },
+        created(){
+        },
         mounted() {
             SelectedPageService.getInstance().updateSelectedPage("Meta");
         },
@@ -93,8 +95,25 @@
                     )
                 }
                 else {
-                    this.textFieldInitialDate = this.textFieldInitialDate.getDate()+'/'+this.textFieldInitialDate.getMonth()+'/'+this.textFieldInitialDate.getFullYear()
-                    this.textFieldFinalDate = this.textFieldFinalDate.getDate()+'/'+this.textFieldFinalDate.getMonth()+'/'+this.textFieldFinalDate.getFullYear()
+                    var dia_inicial = this.textFieldInitialDate.getDate()
+                    if(this.textFieldInitialDate.getDate() < 10){
+                        dia_inicial = '0'+this.textFieldInitialDate.getDate()
+                    }
+                    var mes_inicial = this.textFieldInitialDate.getMonth()
+                    if(this.textFieldInitialDate.getMonth() < 10){
+                        mes_inicial = '0'+this.textFieldInitialDate.getMonth()
+                    }
+
+                    var dia_final = this.textFieldFinalDate.getDate()
+                    if(this.textFieldFinalDate.getDate() < 10){
+                        dia_final = '0'+this.textFieldFinalDate.getDate()
+                    }
+                    var mes_final = this.textFieldFinalDate.getMonth()
+                    if(this.textFieldFinalDate.getMonth() < 10){
+                        mes_final = '0'+this.textFieldFinalDate.getMonth()
+                    }
+                    this.textFieldInitialDate = dia_inicial+'/'+mes_inicial+'/'+this.textFieldInitialDate.getFullYear()
+                    this.textFieldFinalDate = dia_final+'/'+mes_final+'/'+this.textFieldFinalDate.getFullYear()
                     http.request({
                     url: "http://10.0.2.2:8000/meta/",
                     method: "POST",
@@ -111,7 +130,6 @@
                     var result = response.content.toJSON();
                     this.alert(result.message)
                     if (response.statusCode == 200){
-                        this.$store.commit("saveMeta", result.dados);
                         this.$navigateTo(Home);
                     }
 
