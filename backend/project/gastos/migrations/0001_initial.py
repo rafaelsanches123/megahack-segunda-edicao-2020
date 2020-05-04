@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='GastosModel',
             fields=[
-                ('nome', models.CharField(max_length=100, primary_key=True)),
+                ('nome', models.CharField(max_length=100)),
                 ('valor', models.FloatField()),
                 ('data', models.CharField(max_length=20)),
             ],
