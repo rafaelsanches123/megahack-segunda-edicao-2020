@@ -125,10 +125,9 @@
                             
                             var res = response.content.toJSON();
                             console.log(res)
-                        
-                            if (res.statusCode == 200){
-                                this.$navigateTo(Home)
-                            }
+                            this.$navigateTo(Home)
+                            //if (res.statusCode == 200){    
+                            //}
                             }, error => {
                                 console.error(error);
                                 this.alert("Erro com a conexão ao servidor. Tente novamente mais tarde!")
