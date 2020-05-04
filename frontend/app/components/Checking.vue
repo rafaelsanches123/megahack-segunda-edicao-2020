@@ -61,17 +61,26 @@
         data() {
             return {
                 scanner: null,
-                sub_text: "Nessa área você faz a leitura do QR CODE no parceiro e válida sua presença e com isso automaticamente nós atualizamos seu gasto mensal e quanto você está economizando" 
+                sub_text: "Nessa área você faz a leitura do QR CODE no parceiro e válida sua presença e com isso automaticamente nós atualizamos seu gasto mensal e quanto você está economizando", 
+                isIOS: false,
+                pause: false
             }
         },
         async created() {
 		    this.scanner = new BarcodeScanner();
-	    },
+        },
+        created(){
+        },
         mounted() {
             SelectedPageService.getInstance().updateSelectedPage("Tips");
         },
         computed: {
-            
+            usuario(){
+                return this.$store.state.usuario
+            },
+            meta(){
+                return this.$store.state.meta
+            }
         },
         methods: {
             onDrawerButtonTap() {
@@ -92,13 +101,16 @@
 				resultDisplayDuration: 500,   
 				openSettingsIfPermissionWasPreviouslyDenied: true //ios only 
 			}).then((result) => {
-				console.log({
+                //atualizar tabela que armazena os gastos mensais
+                console.log({
 					title: "You Scanned ",
 					message: "Format: " + result.format + ",\nContent: " + result.text,
 					okButtonText: "OK"
-				});
+                });
+                
 			}, (errorMessage) => {
-				console.log("Error when scanning " + errorMessage);
+                console.log("Error when scanning " + errorMessage);
+                console.log("Você parou de scannear o QR CODE e clicou em voltar!");
 			});
 		},
 		scanResult(result) {
