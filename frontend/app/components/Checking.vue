@@ -70,7 +70,7 @@
 		    this.scanner = new BarcodeScanner();
         },
         mounted() {
-            SelectedPageService.getInstance().updateSelectedPage("Tips");
+            SelectedPageService.getInstance().updateSelectedPage("Checking");
         },
         computed: {
             usuario(){
@@ -104,19 +104,11 @@
                         console.log("Scanner closed @ " + new Date().getTime());
                     }
                     }).then(
-                        function (result) {
+                        (result) => {
                         console.log("--- scanned: " + result.text);
                         // Note that this Promise is never invoked when a 'continuousScanCallback' function is provided
-                        setTimeout(function () {
-                            // if this alert doesn't show up please upgrade to {N} 2.4.0+
-                            /*
-                            alert({
-                            title: "Scan result",
-                            message: "Format: " + result.format + ",\nValue: " + result.text,
-                            okButtonText: "OK"
-                            });       
-                            */
-
+                        setTimeout( () => {
+                            
                             //console.log( JSON.parse(JSON.stringify(result.text)) )
                             var res_json = JSON.parse(result.text)
                             //console.log( res_json )
@@ -133,22 +125,16 @@
                             
                             var res = response.content.toJSON();
                             console.log(res)
-                            //this.alert(res.message+"!")
-                            //if (res.statusCode == 200){
-                            //}
-                            alert({
-                            title: "Sucesso!",
-                            message: res.message,
-                            okButtonText: "OK"
-                            });    
-
+                        
+                            if (res.statusCode == 200){
+                                this.$navigateTo(Home)
+                            }
                             }, error => {
                                 console.error(error);
                                 this.alert("Erro com a conexão ao servidor. Tente novamente mais tarde!")
                             });
                             
                         }, 500);
-                        this.$navigateTo(Home); 
                     },
                     function (errorMessage) {
                     console.log("No scan. " + errorMessage);
