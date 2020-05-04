@@ -18,36 +18,21 @@ class CheckingView(generics.ListCreateAPIView):
     serializer_class = CheckingSerializer
 
     def get(self, request):
-        # request
-        # http://localhost:8000/checking/
-        # http://localhost:8000/checking/?nome=Padaria1&valor=10.00&data=10-04-2020
-        _json = request.query_params
-        if request.query_params:
-            register = GastosModel(
-                nome=_json['nome'],
-                valor=_json['valor'],
-                data=_json['data']
-            )
-            register.save()
-            return Response({'message': 'Checking realizado com sucesso!'}, status=200)
-        else:
-            return Response({'message': 'Erro: Dados não informados.'}, status=401)
-    
+        return Response({'message': 'API de GET!'}, status=200)
+       
     def post(self, request):
         _json = request.data
-        if not 'cnpj' in _json:
-            return Response({'message': 'cnpj não informado.'}, status=400)
+        if not 'nome' in _json:
+            return Response({'message': 'nome não informado.'}, status=400)
         if not 'data' in _json:
             return Response({'message': 'data não informada.'}, status=400)
-        data = CheckingModel.objects.filter(cnpj=_json['cnpj'])
-
-        if not data:
-            # faz cadastro
-            register = CheckingModel(
-                nome=_json['cnpj'],
-                senha=_json['data']
-            )
-            register.save()
-            return Response({'message': 'Cadastro realizado com sucesso!'}, status=200)
-        else:
-            return Response({'message': 'Erro: CNPJ já cadastrado.'}, status=400)
+        if not 'valor' in _json:
+            return Response({'message': 'valor não informado.'}, status=400)
+        register = GastosModel(
+            nome=_json['nome'],
+            valor=_json['valor'],
+            data=_json['data']
+        )
+        register.save()
+        return Response({'message': 'Checking realizado com sucesso!'}, status=200)
+        

@@ -25,10 +25,10 @@
                 <Image class="logo" src="~/images/ranking.png" width="100" height="100" stretch="aspectFill" />
                 <Label class="header" text="MINHA META!" />
                 <Label class="sub-header" :text="meta.descricao" />
-                <Label class="time-meta">
+                <Label class="time-meta" textWrap="true">
                             <FormattedString>
                                 <Span text="Dias para finalizar a sua meta: " />
-                                <Span :text="retorna_tempo_testante_meta()" />
+                                <Span :text="retorna_tempo_restante_meta()" />
                                 <Span text=" dias!" />
                             </FormattedString>
                         </Label>
@@ -65,6 +65,7 @@
         
 
             <StackLayout class="">
+                <!-- <Label class="" :text="meta.valor-(usuario.gasto-gastos_mensal_total())" /> -->
                 <Label class="extrato" text="EXTRATO MENSAL DE CONSUMO" />
             </StackLayout>
 
@@ -102,6 +103,7 @@
     import SelectedPageService from "../shared/selected-page-service";
     import * as http from "http";
     import * as ApplicationSettings from "application-settings";
+    import moment from "moment"
 
     export default {
         data() {
@@ -129,21 +131,22 @@
             gastos_mensal(){
                 return this.$store.state.gastos_mensal
             }
-            
         },
         methods: {
+            retorna_tempo_restante_meta(){
+                var data1 = moment(this.meta.data_inicial, "DD_MM_YYYY").locale('pt-br').format('YYYY-MM-DD')
+                var data2 = moment(this.meta.data_final, "DD_MM_YYYY").locale('pt-br').format('YYYY-MM-DD')
+                var startDate = Date.parse(data1);
+                var endDate = Date.parse(data2);
+                var timeDiff = endDate - startDate;
+                return Math.floor(timeDiff / (1000 * 60 * 60 * 24))
+            },
             gastos_mensal_total(){
                 var totalGastoMensal = 0
                 for(var i = 0; i < this.gastos_mensal.length;i++){
                     totalGastoMensal += this.gastos_mensal[i].valor
                 }
                 return totalGastoMensal
-            },
-            retorna_tempo_testante_meta(){
-                var date1 = new Date(this.meta.data_inicial);
-                var date2 = new Date(this.meta.data_final);
-                var diffDays = parseInt((date2 - date1) / (1000 * 60 * 60 * 24), 10); 
-                return diffDays//this.tempo_meta
             },
             onDrawerButtonTap() {
                 utils.showDrawer();

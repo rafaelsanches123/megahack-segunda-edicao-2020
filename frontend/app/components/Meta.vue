@@ -38,7 +38,7 @@
 
             <StackLayout class="">
             <Label class="inputs-text-date" text="E QUANDO TERMINA ESSA META?"></Label>
-            <DatePicker v-model="textFieldInitialDate" :date="textFieldInitialDate" />
+            <DatePicker v-model="textFieldFinalDate" :date="textFieldFinalDate" />
             </StackLayout>
 
             <StackLayout class="">
@@ -58,6 +58,8 @@
 <script>
     import * as utils from "~/shared/utils";
     import SelectedPageService from "../shared/selected-page-service";
+    import * as http from "http";
+    import Home from "./Home";
 
     export default {
         data() {
@@ -68,11 +70,15 @@
                 textFieldValue                : "",
             }
         },
+        created(){
+        },
         mounted() {
             SelectedPageService.getInstance().updateSelectedPage("Meta");
         },
         computed: {
-            
+            usuario(){
+                return this.$store.state.usuario
+            }
         },
         methods: {
             onDrawerButtonTap() {
@@ -83,28 +89,48 @@
                 return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
             },
             validateMeta() {
-                if (this.textFieldDescryption == "" || this.textFieldValue == "") {
+                if (this.textFieldDescription == "" || this.textFieldValue == "") {
                     this.alert(
                         "Por favor, todos os dados são obrigatórios o seu preenchimento!"
                     )
                 }
                 else {
+                    var dia_inicial = this.textFieldInitialDate.getDate()
+                    if(this.textFieldInitialDate.getDate() < 10){
+                        dia_inicial = '0'+this.textFieldInitialDate.getDate()
+                    }
+                    var mes_inicial = this.textFieldInitialDate.getMonth()
+                    if(this.textFieldInitialDate.getMonth() < 10){
+                        mes_inicial = '0'+this.textFieldInitialDate.getMonth()
+                    }
+
+                    var dia_final = this.textFieldFinalDate.getDate()
+                    if(this.textFieldFinalDate.getDate() < 10){
+                        dia_final = '0'+this.textFieldFinalDate.getDate()
+                    }
+                    var mes_final = this.textFieldFinalDate.getMonth()
+                    if(this.textFieldFinalDate.getMonth() < 10){
+                        mes_final = '0'+this.textFieldFinalDate.getMonth()
+                    }
+                    this.textFieldInitialDate = dia_inicial+'/'+mes_inicial+'/'+this.textFieldInitialDate.getFullYear()
+                    this.textFieldFinalDate = dia_final+'/'+mes_final+'/'+this.textFieldFinalDate.getFullYear()
                     http.request({
                     url: "http://10.0.2.2:8000/meta/",
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     content: JSON.stringify({
-                        'descricao'     :    this.textFieldDescryption,
-                        'valor'  :    this.textFieldValue,
-                        'inicio'    :    this.textFieldInitialDate,
-                        'fim'    :    this.textFieldFinalDate,
+                        'email'         : this.usuario.email,
+                        'descricao'     : this.textFieldDescription,
+                        'valor'         : this.textFieldValue,
+                        'data_inicial'  : this.textFieldInitialDate,
+                        'data_final'    : this.textFieldFinalDate,
                     })
                     }).then(response => {
                     
                     var result = response.content.toJSON();
                     this.alert(result.message)
                     if (response.statusCode == 200){
-                        this.$navigateTo(Login);
+                        this.$navigateTo(Home);
                     }
 
                     }, error => {
