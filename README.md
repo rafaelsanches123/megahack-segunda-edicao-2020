@@ -19,6 +19,6 @@
 
 ### Arquitetura de solução (Macro)
 
-![](arquitetura/arquitetura_solucao.png){:height="50%" width="50%"}
+![](arquitetura/arquitetura_solucao.png =250x250)
 
 
