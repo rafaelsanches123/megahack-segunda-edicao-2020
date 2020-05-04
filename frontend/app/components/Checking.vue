@@ -37,7 +37,7 @@
                     reportDuplicates="true"
                     preferFrontCamera="false"
                     :pause="pause"
-                    @scanResult="scanResult"
+                    @scanResult="onScanResult"
                     v-if="isIOS">
                 </BarcodeScanner>
             </StackLayout>
@@ -52,12 +52,12 @@
 <script>
     import * as utils from "~/shared/utils";
     import SelectedPageService from "../shared/selected-page-service";
-    const BarcodeScanner = require("nativescript-barcodescanner").BarcodeScanner;
+    import Home from "./Home";
+    import * as http from "http";
+    import {isIOS} from "tns-core-modules/platform";
+    import {BarcodeScanner} from "nativescript-barcodescanner";
 
     export default {
-        components: {
-		"BarcodeScanner": require("nativescript-barcodescanner").BarcodeScannerView
-	    },
         data() {
             return {
                 scanner: null,
@@ -69,17 +69,12 @@
         async created() {
 		    this.scanner = new BarcodeScanner();
         },
-        created(){
-        },
         mounted() {
             SelectedPageService.getInstance().updateSelectedPage("Tips");
         },
         computed: {
             usuario(){
                 return this.$store.state.usuario
-            },
-            meta(){
-                return this.$store.state.meta
             }
         },
         methods: {
@@ -90,32 +85,76 @@
                 let val = (value/1).toFixed(2).replace('.', ',')
                 return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
             },
-            onScan() {
-			this.scanner.scan({
-				formats: "QR_CODE, EAN_13",
-				showFlipCameraButton: true,   
-				preferFrontCamera: false,     
-				showTorchButton: true,        
-				beepOnScan: true,             
-				torchOn: false,               
-				resultDisplayDuration: 500,   
-				openSettingsIfPermissionWasPreviouslyDenied: true //ios only 
-			}).then((result) => {
-                //atualizar tabela que armazena os gastos mensais
-                console.log({
-					title: "You Scanned ",
-					message: "Format: " + result.format + ",\nContent: " + result.text,
-					okButtonText: "OK"
-                });
-                
-			}, (errorMessage) => {
-                console.log("Error when scanning " + errorMessage);
-                console.log("Você parou de scannear o QR CODE e clicou em voltar!");
-			});
-		},
-		scanResult(result) {
-			console.log(`Format: ${ result.format }, Value: ${ result.text }`);
-		}
+            onScanResult(evt) {
+                console.log(`onScanResult: ${evt.text} (${evt.format})`);
+            },
+            onScan(front) {
+                    new BarcodeScanner().scan({
+                    cancelLabel: "EXIT. Also, try the volume buttons!", // iOS only, default 'Close'
+                    cancelLabelBackgroundColor: "#333333", // iOS only, default '#000000' (black)
+                    message: "Use the volume buttons for extra light", // Android only, default is 'Place a barcode inside the viewfinder rectangle to scan it.'
+                    preferFrontCamera: front,     // Android only, default false
+                    showFlipCameraButton: true,   // default false
+                    showTorchButton: true,        // iOS only, default false
+                    torchOn: false,               // launch with the flashlight on (default false)
+                    resultDisplayDuration: 500,   // Android only, default 1500 (ms), set to 0 to disable echoing the scanned text
+                    beepOnScan: true,             // Play or Suppress beep on scan (default true)
+                    openSettingsIfPermissionWasPreviouslyDenied: true, // On iOS you can send the user to the settings app if access was previously denied
+                    closeCallback: () => {
+                        console.log("Scanner closed @ " + new Date().getTime());
+                    }
+                    }).then(
+                        function (result) {
+                        console.log("--- scanned: " + result.text);
+                        // Note that this Promise is never invoked when a 'continuousScanCallback' function is provided
+                        setTimeout(function () {
+                            // if this alert doesn't show up please upgrade to {N} 2.4.0+
+                            /*
+                            alert({
+                            title: "Scan result",
+                            message: "Format: " + result.format + ",\nValue: " + result.text,
+                            okButtonText: "OK"
+                            });       
+                            */
+
+                            //console.log( JSON.parse(JSON.stringify(result.text)) )
+                            var res_json = JSON.parse(result.text)
+                            //console.log( res_json )
+                            http.request({
+                            url: "http://10.0.2.2:8000/checking/",
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            content: JSON.stringify({
+                                'nome'  : res_json.nome,
+                                'valor' : res_json.valor,
+                                'data'  : res_json.data
+                            })
+                            }).then(response => {
+                            
+                            var res = response.content.toJSON();
+                            console.log(res)
+                            //this.alert(res.message+"!")
+                            //if (res.statusCode == 200){
+                            //}
+                            alert({
+                            title: "Sucesso!",
+                            message: res.message,
+                            okButtonText: "OK"
+                            });    
+
+                            }, error => {
+                                console.error(error);
+                                this.alert("Erro com a conexão ao servidor. Tente novamente mais tarde!")
+                            });
+                            
+                        }, 500);
+                        this.$navigateTo(Home); 
+                    },
+                    function (errorMessage) {
+                    console.log("No scan. " + errorMessage);
+                    }
+                );
+            }
         }
     };
 </script>
