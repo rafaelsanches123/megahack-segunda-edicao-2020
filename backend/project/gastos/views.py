@@ -30,4 +30,18 @@ class GastosView(generics.ListCreateAPIView):
         return Response({'message': 'Dados de gastos', 'dados': gastos}, status=200)
      
     def post(self, request):
-        return Response({'message': 'API com método de POST.'}, status=200)
+        _json = request.data
+        if not 'nome' in _json:
+            return Response({'message': 'nome não informado.'}, status=400)
+        if not 'data' in _json:
+            return Response({'message': 'data não informada.'}, status=400)
+        if not 'valor' in _json:
+            return Response({'message': 'valor não informado.'}, status=400)
+        register = GastosModel(
+            nome=_json['nome'],
+            valor=_json['valor'],
+            data=_json['data']
+        )
+        register.save()
+        return Response({'message': 'Gastos registrado com sucesso!'}, status=200)
+        

@@ -16,12 +16,12 @@ class RankingView(generics.ListCreateAPIView):
            
     def get(self, request):
         resp = []
-        for p in RankingModel.objects.all():
+        ordered = RankingModel.objects.order_by('-classificacao')
+        for p in ordered:
             resp.append({   
                 'nome_restaurante': p.nome_restaurante, 
                 'valor_prato': p.valor_prato,
-                'classificacao': p.numero_estrelas_prato
-                # 'numero_estrelas_valor': p.numero_estrelas_valor
+                'classificacao': p.classificacao
             })
         return Response({'message': 'Ranking acessado com sucesso!', 'dados': resp}, status=200)
 
@@ -31,15 +31,12 @@ class RankingView(generics.ListCreateAPIView):
             return Response({'message': 'nome_restaurante não informado.'}, status=400)
         if not 'valor_prato' in _json:
             return Response({'message': 'valor_prato não informada.'}, status=400)
-        if not 'numero_estrelas_prato' in _json:
-            return Response({'message': 'numero_estrelas_prato não informada.'}, status=400)
-        if not 'numero_estrelas_valor' in _json:
-            return Response({'message': 'numero_estrelas_valor não informada.'}, status=400)
+        if not 'classificacao' in _json:
+            return Response({'message': 'classificacao não informada.'}, status=400)
         register = RankingModel(
             nome_restaurante=_json['nome_restaurante'],
             valor_prato=_json['valor_prato'],
-            numero_estrelas_prato=_json['numero_estrelas_prato'],
-            numero_estrelas_valor=_json['numero_estrelas_valor']
+            classificacao=_json['classificacao']
         )
         register.save()
         return Response({'message': 'Dados cadastrados com sucesso.'}, status=200)
