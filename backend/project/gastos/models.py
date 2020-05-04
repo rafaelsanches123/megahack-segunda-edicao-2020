@@ -6,7 +6,7 @@ class GastosModel(models.Model):
     class Meta:
         db_table = 'gastos'
     
-    nome = models.CharField(max_length=100, primary_key=True)
+    nome = models.CharField(max_length=100)
     valor = models.FloatField()
     data = models.CharField(max_length=20)
     
