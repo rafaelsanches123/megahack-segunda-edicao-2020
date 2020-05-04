@@ -19,6 +19,6 @@
 
 ### Arquitetura de solução (Macro)
 
-![](arquitetura/arquitetura_solucao.png)
+![](arquitetura/arquitetura_solucao.png =250x)
 
 
