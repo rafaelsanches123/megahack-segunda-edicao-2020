@@ -19,38 +19,39 @@
             <Label class="action-bar-title" text="Minha Meta"></Label>
         </ActionBar>
 
-        <ScrollView class="page__content">
-        <StackLayout class="">    
-            <StackLayout class="">
-                <Image class="logo" src="~/images/target.png" stretch="none" />
-                <Label class="header" text="MINHA META" />
-                <Label class="sub-header" textWrap="true" text="Chegou a hora de começar a mudar sua vida financeira!" />
-            </StackLayout>
-            
-            <StackLayout class="">
-            <TextField class="inputs-text" v-model="textFieldDescription"  hint="DESCREVER SUA META AQUI..."/>
-            <HtmlView html="<br>" />
-            </StackLayout>
-            
-            <StackLayout class="inputs-text-date">
-            <Label class="text-meta" text="SUA META INICIA HOJE!"></Label>
-            </StackLayout>
+        <StackLayout class="page__content">
+            <StackLayout class="">    
+                <StackLayout class="">
+                    <Image class="logo" src="~/images/target.png" stretch="none" />
+                    <Label class="header" text="MINHA META" />
+                    <Label class="sub-header" textWrap="true" text="Chegou a hora de começar a mudar sua vida financeira!" />
+                </StackLayout>
+                
+                <StackLayout class="">
+                    <TextField class="inputs-text" v-model="textFieldDescription"  hint="DESCREVER SUA META AQUI..."/>
+                    <HtmlView html="<br>" />
+                </StackLayout>
+                
+                <StackLayout class="inputs-text-date">
+                    <Label class="text-meta" text="SUA META INICIA HOJE!"></Label>
+                </StackLayout>
 
-            <StackLayout class="">
-            <Label class="inputs-text-date" text="E QUANDO TERMINA ESSA META?"></Label>
-            <DatePicker v-model="textFieldFinalDate" :date="textFieldFinalDate" />
-            </StackLayout>
+                <StackLayout class="">
+                    <Label class="inputs-text-date" text="E QUANDO TERMINA ESSA META?"></Label>
+                    <DatePicker v-model="textFieldFinalDate" :date="textFieldFinalDate" />
+                </StackLayout>
 
-            <StackLayout class="">
-            <TextField class="inputs-text" v-model="textFieldValue"  hint="QUANTO CUSTA SUA META (ex:15000)"/>
-            </StackLayout>
+                <StackLayout class="">
+                    <TextField class="inputs-text" v-model="textFieldValue"  hint="QUANTO CUSTA SUA META (ex:15000)"/>
+                </StackLayout>
 
-            <StackLayout class="">
-            <HtmlView html="<div></div><br><br></div>" />
-            <Button class="btn-primary" text="SALVAR META" @tap="validateMeta" />
-            </StackLayout>
-        </StackLayout>    
-        </ScrollView>
+                <StackLayout class="">
+                    <HtmlView html="<div><br></div>" />
+                    <Button class="btn-primary" text="SALVAR META" @tap="validateMeta" />
+                    <HtmlView html="<div><br></div>" />
+                </StackLayout>
+            </StackLayout>    
+        </StackLayout>
 
     </Page>
 </template>
@@ -156,6 +157,17 @@
     // End custom common variables
 
     // Custom styles
+       .btn-primary {
+    margin-top: 30px;
+    height: 50;
+    border-radius: 5;
+    font-size: 20;
+    font-weight: 600;
+    background-color: white;
+    :disabled {
+        opacity: 0.5;
+    }
+    }
     .header {
         horizontal-align: center;
         font-size: 25;
@@ -167,11 +179,10 @@
         horizontal-align: center;
         font-size: 16;
         font-weight: 300;
-        margin-bottom: 25;
+        margin-bottom: 20;
         text-align: center;
     }
     .logo {
-        margin-top: 80px;
         horizontal-align: center;
     }
     .inputs-text-date{
@@ -180,4 +191,5 @@
     .text-meta{
         font-weight: 600;
     }
+    
 </style>

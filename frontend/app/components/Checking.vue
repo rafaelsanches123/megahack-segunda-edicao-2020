@@ -124,7 +124,13 @@
                             }).then(response => {
                             
                             var res = response.content.toJSON();
-                            console.log(res)
+                            console.log("Resposta da API GASTO MENSAL: " + res)
+                            
+                            action("COMO VOCÊ CLASSIFICARIA SUA EXPERIÊNCIA?", "SAIR", ["ÓTIMA", "BOA", "MÉDIA", "RUIM", "PÉSSIMA"])
+                                .then(result => {
+                                console.log("A classificação do usuário foi: " + result);
+                            });
+                            
                             this.$navigateTo(Home)
                             //if (res.statusCode == 200){    
                             //}
