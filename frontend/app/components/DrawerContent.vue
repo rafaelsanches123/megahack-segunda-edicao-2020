@@ -14,22 +14,22 @@
                     </GridLayout>
 
                     <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Checking' ? ' -selected': '')" @tap="onNavigationItemTap(Checking)">
-                        <Label col="0" text.decode="&#xf015;" class="nt-icon fas"></Label>
+                        <Label col="0" text.decode="&#xf14a;" class="nt-icon fas"></Label>
                         <Label col="1" text="Checking" class="p-r-10"></Label>
                     </GridLayout>
 
                     <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Ranking' ? ' -selected': '')" @tap="onNavigationItemTap(Ranking)">
-                        <Label col="0" text.decode="&#xf015;" class="nt-icon fas"></Label>
+                        <Label col="0" text.decode="&#xf1d8;" class="nt-icon fas"></Label>
                         <Label col="1" text="Recomendação do Dia" class="p-r-10"></Label>
                     </GridLayout>
 
                     <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Meta' ? ' -selected': '')" @tap="onNavigationItemTap(Meta)">
-                        <Label col="0" text.decode="&#xf015;" class="nt-icon fas"></Label>
+                        <Label col="0" text.decode="&#xf140;" class="nt-icon fas"></Label>
                         <Label col="1" text="Meta" class="p-r-10"></Label>
                     </GridLayout>
 
                     <GridLayout columns="auto, *" :class="'nt-drawer__list-item' + (selectedPage === 'Tips' ? ' -selected': '')" @tap="onNavigationItemTap(Tips)">
-                        <Label col="0" text.decode="&#xf015;" class="nt-icon fas"></Label>
+                        <Label col="0" text.decode="&#xf0a1;" class="nt-icon fas"></Label>
                         <Label col="1" text="Dica do Dia" class="p-r-10"></Label>
                     </GridLayout>
 
