@@ -3,6 +3,7 @@
 ### Prequisitos de instalação
 - [Docker](https://docs.docker.com/get-docker/)
 - [docker-compose](https://docs.docker.com/compose/install/)
+- [NativeScript](https://docs.nativescript.org/sidekick/intro/installation)
 
 ### Construir imagens
 
