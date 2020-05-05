@@ -19,6 +19,6 @@
 
 ### Arquitetura de solução (Macro)
 
-![](arquitetura/arquitetura_solucao.png =250x250)
+<img width="200" alt="portfolio_view" src="arquitetura/arquitetura_solucao.png">
 
 
