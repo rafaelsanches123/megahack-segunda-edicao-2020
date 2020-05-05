@@ -8,7 +8,7 @@
 
 - docker-compose up --build
 
-### Acessar servidor Django
+### Acessar servidor Django (local)
 
 - http://localhost:8000
 - http://localhost:8000/login/
@@ -17,7 +17,7 @@
 - cd dados/
 - docker-compose up --build
 
-### Link APIs REST do [Me Salve!](https://still-mesa-79761.herokuapp.com/)
+### Servidor remoto do [Me Salve!](https://still-mesa-79761.herokuapp.com/)
 
 ### Arquitetura de solução (Macro)
 
