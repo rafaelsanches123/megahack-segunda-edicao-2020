@@ -13,7 +13,7 @@
   "repository": "<fill-your-repository-here>",
   "dependencies": {
     "@nativescript/theme": "~2.3.3",
-    "moment": "^2.25.1",
+    "moment": "^2.29.2",
     "nativescript-barcodescanner": "^3.4.2",
     "nativescript-localstorage": "^2.0.1",
     "nativescript-star-ratings": "^1.0.0",
